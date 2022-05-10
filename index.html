@@ -1,547 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-	body {
-		font-family: 'Lato', sans-serif;
-	}
-	
-	.overlay {
-		height: 100%;
-		width: 0;
-		position: fixed;
-		z-index: 1;
-		top: 0;
-		left: 0;
-		background-color: rgb(0,0,0);
-		background-color: rgba(0,0,0, 0.9);
-		overflow-x: hidden;
-		transition: 0.5s;
-	}
-	
-	
-	
-	.overlay a {
-		padding: 8px;
-		text-decoration: none;
-		font-size: 36px;
-		color: #818181;
-		display: block;
-		transition: 0.3s;
-	}
-	
-	
-	
-	
-	
-	
-	</style>
+	<meta charset="UTF-8" />
+	<link href="style.css" rel="stylesheet" />
+
+	<title>The Basic Language of the Web: HTML</title>
 </head>
 
-
-
-
-
-
 <body>
+	<!--
+    <h1>The Basic Language of the Web: HTML</h1>
+    <h2>The Basic Language of the Web: HTML</h2>
+    <h3>The Basic Language of the Web: HTML</h3>
+    <h4>The Basic Language of the Web: HTML</h4>
+    <h5>The Basic Language of the Web: HTML</h5>
+    <h6>The Basic Language of the Web: HTML</h6>
+  -->
 
+	<div class="container">
+		<header class="main-header">
+			<h1>📘 The Code Magazine</h1>
 
-<div id="myNav" class="overlay">
-	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<div class="overlay-content">
-		<a href="#">About</a>
-		<a href="#">Services</a>
-		<a href="#">Clients</a>
-		<a href="#">Contact</a>
+			<nav>
+				<!-- <strong>This is the navigation</strong> -->
+				<a href="other page/blog.html">Blog</a>
+				<a href="#">Challenges</a>
+				<a href="other page/flexbox.html">Flexbox</a>
+				<a href="other page/css-grid.html">CSS Grid</a>
+			</nav>
+		</header>
+
+		<div class="row">
+			<article>
+				<header class="post-header">
+					<h2>The Basic Language of the Web: HTML</h2>
+
+					<div class="author-box">
+						<img src="img/laura-jones.jpg" alt="Headshot of Laura Jones" height="50" width="50" />
+
+						<p id="author">
+							Posted by <strong>Laura Jones</strong> on Monday, June 21st 2027
+						</p>
+					</div>
+
+					<img src="img/post-img.jpg" alt="HTML code on a screen" width="500" height="200" class="post-img" />
+					<button>❤️ Like</button>
+				</header>
+
+				<p>
+					All modern websites and web applications are built using three
+					<em>fundamental</em>
+					technologies: HTML, CSS and JavaScript. These are the languages of
+					the web.
+				</p>
+
+				<p>
+					In this post, let's focus on HTML. We will learn what HTML is all
+					about, and why you too should learn it.
+				</p>
+
+				<h3>What is HTML?</h3>
+				<p>
+					HTML stands for <strong>H</strong>yper<strong>T</strong>ext
+					<strong>M</strong>arkup <strong>L</strong>anguage. It's a markup
+					language that web developers use to structure and describe the
+					content of a webpage (not a programming language).
+				</p>
+				<p>
+					HTML consists of elements that describe different types of content:
+					paragraphs, links, headings, images, video, etc. Web browsers
+					understand HTML and render HTML code as websites.
+				</p>
+				<p>In HTML, each element is made up of 3 parts:</p>
+
+				<ol>
+					<li class="first-li">The opening tag</li>
+					<li>The closing tag</li>
+					<li>The actual element</li>
+				</ol>
+
+				<p>
+					You can learn more at
+					<a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN Web Docs</a>.
+				</p>
+
+				<h3>Why should you learn HTML?</h3>
+
+				<p>
+					There are countless reasons for learning the fundamental language of
+					the web. Here are 5 of them:
+				</p>
+
+				<ul>
+					<li class="first-li">
+						To be able to use the fundamental web dev language
+					</li>
+					<li>
+						To hand-craft beautiful websites instead of relying on tools like
+						Worpress or Wix
+					</li>
+					<li>To build web applications</li>
+					<li>To impress friends</li>
+					<li>To have fun 😃</li>
+				</ul>
+
+				<p>Hopefully you learned something new here. See you next time!</p>
+			</article>
+
+			<aside>
+				<h4>Related posts</h4>
+
+				<ul class="related">
+					<li class="related-post">
+						<img src="img/related-1.jpg" alt="Person programming" width="75" height="75" />
+						<div>
+							<a href="#" class="related-link">How to Learn Web Development</a>
+							<p class="related-author">By Jonas Schmedtmann</p>
+						</div>
+					</li>
+
+					<li class="related-post">
+						<img src="img/related-2.jpg" alt="Lightning" width="75" height="75" />
+						<div>
+							<a href="#" class="related-link">The Unknown Powers of CSS</a>
+							<p class="related-author">By Jim Dillon</p>
+						</div>
+					</li>
+
+					<li class="related-post">
+						<img src="img/related-3.jpg" alt="JavaScript code on a screen" width="75" height="75" />
+
+						<div>
+							<a href="#" class="related-link">Why JavaScript is Awesome</a>
+							<p class="related-author">By Matilda</p>
+						</div>
+					</li>
+				</ul>
+			</aside>
+		</div>
+
+		<footer>
+			<p id="copyright" class="copyright text">
+				Copyright &copy; 2027 by The Code Magazine.
+			</p>
+		</footer>
 	</div>
-</div>
-	
-<h2>Fullscreen Overlay Nav Example</h2>
-<p>Click on the element below to open the fullscreen overlay navigation menu.</p>
-<p>In this example, the navigation menu will slide in, from left to right:</p>
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
-
-
-<script>
-	function openNav() {
-	  document.getElementById("myNav").style.width = "100%";
-	}
-	
-	function closeNav() {
-	  document.getElementById("myNav").style.width = "0%";
-	}
-</script>
-
-
-
-
-
-
-
-<font face = "TH SarabunPSK" style=font-size:18>
-14:47:08
-<br>
-<br>
-<b style=font-size:24>Tnn</b>
-<table style=font-size:18>
-<thead>
-<tr>
-<th>No</th>
-<th width = 600>News Headline</th>
-<th width =80>views</th>
-<th>link</th>
-</tr>
-</thead>
-<tbody>
-
-		<tr>
-		<td>1</td>
-		<td>ชาวยูเครนอยากมีนิวเคลียร์-“ลุฟฮันซา” ระงับเที่ยวบินเข้า-ออกยูเครน | TNNข่าวเที่ยง | 21-2-65</td>
-		<td>5,053</td>
-		<td><a href= https://www.youtube.com/watch?v=mc2hcNmumt0>link</a></td>
-		</tr>
-		<tr>
-		<td>2</td>
-		<td>“ดอนบาส” ใจกลางสำคัญสมรภูมิรัสเซีย-ยูเครน | TNNข่าวเที่ยง | 21-2-65</td>
-		<td>5,283</td>
-		<td><a href= https://www.youtube.com/watch?v=3NI8WK2UJLE>link</a></td>
-		</tr>
-		<tr>
-		<td>3</td>
-		<td>สหรัฐรุกอาเซียน กันจีน ด้วย "เค้าโครงเศรษฐกิจอินโดแปซิฟิก"</td>
-		<td>8,152</td>
-		<td><a href= https://www.youtube.com/watch?v=zlE0qNMcZZw>link</a></td>
-		</tr>
-		<tr>
-		<td>4</td>
-		<td>ลามเร็ว !! การลาออกครั้งใหญ่มาเวียดนามแล้ว</td>
-		<td>9,487</td>
-		<td><a href= https://www.youtube.com/watch?v=VD74yR0Az6o>link</a></td>
-		</tr>
-		<tr>
-		<td>5</td>
-		<td>สหรัฐฯ พร้อมคว่ำบาตรรัสเซีย แต่ยืนยันเดินหน้าใช้การทูตแก้วิกฤต  I TNN ชั่วโมงทำเงิน I 21-02-65</td>
-		<td>16,889</td>
-		<td><a href= https://www.youtube.com/watch?v=3uUXvzDgh8Q>link</a></td>
-		</tr>
-		<tr>
-		<td>6</td>
-		<td>ลมหนาวกลับมา เย็นลง 4-6 องศาฯ | TNN EARTH | 21-02-2022</td>
-		<td>12,924</td>
-		<td><a href= https://www.youtube.com/watch?v=-HhAdZXXnZY>link</a></td>
-		</tr>
-		<tr>
-		<td>7</td>
-		<td>รัสเซีย “ขยายเวลาซ้อมรบ” ตรึงทหาร 30,000 นาย ในเบลารุส l TNN News ข่าวเช้า l 21-02-2022</td>
-		<td>20,658</td>
-		<td><a href= https://www.youtube.com/watch?v=aB1bW1M_ctI>link</a></td>
-		</tr>
-		<tr>
-		<td>8</td>
-		<td>"ยูนิซ" ถล่มแรงสุดรอบ 30 ปี!!   ดินถล่มบราซิลพังราบเหมือนระเบิดลง | TNN ข่าวดึก | 20 ก.พ. 65</td>
-		<td>14,604</td>
-		<td><a href= https://www.youtube.com/watch?v=1NiG4FcN47g>link</a></td>
-		</tr>
-		<tr>
-		<td>9</td>
-		<td>คุมไม่อยู่ "เกาหลีใต้" !!   ป่วยทะลุแสน 3 วันติด-ฮ่องกงอ่วม | TNN ข่าวดึก | 20 ก.พ. 65</td>
-		<td>22,291</td>
-		<td><a href= https://www.youtube.com/watch?v=E_Gs_v0dEr8>link</a></td>
-		</tr>
-		<tr>
-		<td>10</td>
-		<td>ไขปม!! โควิดไทยขาขึ้น  เสี่ยงต่อการเปลี่ยนแปลงของเชื้อ? | TNN ข่าวดึก | 20 ก.พ. 65</td>
-		<td>12,948</td>
-		<td><a href= https://www.youtube.com/watch?v=eiuJ_idF3RY>link</a></td>
-		</tr>
-		<tr>
-		<td>11</td>
-		<td>อังกฤษลั่น! รัสเซียบุกแล้ว   ยูเครนเติมเชื้อ! ขอนาโต-ยุโรปชัดเจน | TNN ข่าวดึก | 20 ก.พ. 65</td>
-		<td>279,637</td>
-		<td><a href= https://www.youtube.com/watch?v=Z7ylgJJ1Q4I>link</a></td>
-		</tr>
-		<tr>
-		<td>12</td>
-		<td>ขายกิจการโรงแรมในไทยเงินสะพัดหมื่นล้าน | BUSINESS WATCH | 20-02-2565</td>
-		<td>20,050</td>
-		<td><a href= https://www.youtube.com/watch?v=KWM9KObvBnQ>link</a></td>
-		</tr>
-		<tr>
-		<td>13</td>
-		<td>โรงแรมดังระดับโลกปักหมุดลงทุนไทย | BUSINESS WATCH | 20-02-2565</td>
-		<td>31,706</td>
-		<td><a href= https://www.youtube.com/watch?v=AxcSr_Jt2EY>link</a></td>
-		</tr>
-		<tr>
-		<td>14</td>
-		<td>ฉีดวัคซีนยังติดโอมิครอน 55.9% BA.2 ระบาดไม่กระทบประกาศโรคประจำถิ่น | TNN ข่าวค่ำ | 20 ก.พ. 65</td>
-		<td>21,675</td>
-		<td><a href= https://www.youtube.com/watch?v=Xsa0QSUEKs4>link</a></td>
-		</tr>
-		<tr>
-		<td>15</td>
-		<td>ออสเตรเลียไม่พอใจจีนชี้อันตราย “ยิงเลเซอร์”ส่องเครื่องบินสอดแนม | TNN ข่าวค่ำ | 20 ก.พ. 65</td>
-		<td>87,915</td>
-		<td><a href= https://www.youtube.com/watch?v=2w-gnTjQ-vE>link</a></td>
-		</tr>
-		<tr>
-		<td>16</td>
-		<td>ชีวิตสตรีในยุคตาลีบันไร้สงคราม ร้างรายได้</td>
-		<td>9,229</td>
-		<td><a href= https://www.youtube.com/watch?v=MPOk02MpXSk>link</a></td>
-		</tr>
-		<tr>
-		<td>17</td>
-		<td>แค่สงครามข่าวสาร “รัสเซีย”ไม่บุก“ยูเครน” | TNN ข่าวค่ำ | 20 ก.พ. 65</td>
-		<td>53,680</td>
-		<td><a href= https://www.youtube.com/watch?v=JYthENEKsng>link</a></td>
-		</tr>
-		<tr>
-		<td>18</td>
-		<td>ตะวันออกยูเครนยิงกันหนัก! ร้องชาติตะวันตก"คว่ำบาตรรัสเซีย"ทันที | TNN ข่าวค่ำ | 20 ก.พ. 65</td>
-		<td>401,360</td>
-		<td><a href= https://www.youtube.com/watch?v=NmbXa8wqGmk>link</a></td>
-		</tr>
-		<tr>
-		<td>19</td>
-		<td>ออสเตรเลียเปิดประเทศในรอบ 2ปีพรุ่งนี้ TNNข่าวค่ำ วันที่ 20  ก.พ.</td>
-		<td>43,785</td>
-		<td><a href= https://www.youtube.com/watch?v=qIHiLNzcTZI>link</a></td>
-		</tr>
-		<tr>
-		<td>20</td>
-		<td>จีนป่วน ขาดแรงงานหลายพื้นที่</td>
-		<td>17,039</td>
-		<td><a href= https://www.youtube.com/watch?v=qy9u7ZtVR2w>link</a></td>
-		</tr>
-		<tr>
-		<td>21</td>
-		<td>จีนเข้ม !! ตรวจโควิดด่านลาว-จีนกระทบเส้นทางทุเรียนไทย</td>
-		<td>8,436</td>
-		<td><a href= https://www.youtube.com/watch?v=moQdjFHI-GM>link</a></td>
-		</tr>
-		<tr>
-		<td>22</td>
-		<td>จีนไม่เชื่อ !! อเมริกาตีสนิทอาเซียนเป็นเรื่องดี</td>
-		<td>21,142</td>
-		<td><a href= https://www.youtube.com/watch?v=Ubywn5KnmSo>link</a></td>
-		</tr>
-		<tr>
-		<td>23</td>
-		<td>รถไฟลาวขอรับเงินสกุลต่างชาติ   70 วันทำเงิน 320 ล้านบาท</td>
-		<td>24,197</td>
-		<td><a href= https://www.youtube.com/watch?v=CVbwBBQwjUw>link</a></td>
-		</tr>
-		<tr>
-		<td>24</td>
-		<td>จีนเอาจริงเรื่องอาหาร ทุ่ม 7 แสนล้านบาทปล่อยกู้เกษตรกร</td>
-		<td>12,497</td>
-		<td><a href= https://www.youtube.com/watch?v=EKjhUw5l6RU>link</a></td>
-		</tr>
-		<tr>
-		<td>25</td>
-		<td>ผู้นำยูเครนไม่หวั่นรัสเซีย! ผู้เชี่ยวชาญชี้ 2 ชาติ ยั่วยุไปมาปมสู่สงคราม | TNN ข่าวเย็น | 20-02-22</td>
-		<td>92,945</td>
-		<td><a href= https://www.youtube.com/watch?v=opHGOvLViHI>link</a></td>
-		</tr>
-		<tr>
-		<td>26</td>
-		<td>"ทูตรัสเซีย" ร่วมเปิดสำนักงานกงสุลกิตติมศักดิ์รัสเซีย จ.เชียงใหม่  | TNN ข่าวเย็น | 20-02-22</td>
-		<td>12,322</td>
-		<td><a href= https://www.youtube.com/watch?v=j0HN7vgZIK0>link</a></td>
-		</tr>
-		<tr>
-		<td>27</td>
-		<td>ยูเครนลั่นจะไม่ตอบสนองต่อการยั่วยุของรัสเซีย TNN ข่าวเย็น วันที่ 20 ก.พ.</td>
-		<td>28,942</td>
-		<td><a href= https://www.youtube.com/watch?v=SBrusJYJwoA>link</a></td>
-		</tr>
-		<tr>
-		<td>28</td>
-		<td>รายการ อาเซียน4.0ออนไลน์ | อาทิตย์ที่ 20 ก.พ. 2565 (FULL)</td>
-		<td>8,519</td>
-		<td><a href= https://www.youtube.com/watch?v=QhIuS7d7680>link</a></td>
-		</tr>
-		<tr>
-		<td>29</td>
-		<td>สิ้นสุดการรอคอย! ออสเตรเลียเปิดรับนักท่องเที่ยวต่างชาติพรุ่งนี้ | TNN ข่าวเย็น | 20-02-22</td>
-		<td>8,128</td>
-		<td><a href= https://www.youtube.com/watch?v=q2t-O5kGQc8>link</a></td>
-		</tr>
-		<tr>
-		<td>30</td>
-		<td>หมอประสานเสียง! ห่วง BA.2 ทำติดเชื้อพุ่ง-เสี่ยงตายเพิ่ม | TNN ข่าวเย็น | 20-02-22</td>
-		<td>41,480</td>
-		<td><a href= https://www.youtube.com/watch?v=uHTiwoCVlYw>link</a></td>
-		</tr>
-		<tr>
-		<td>31</td>
-		<td>"แพทย์โรคอุบัติใหม่" มองอย่างไร ถ้าปลายปี65 โควิดจะกลายเป็นโรคประจำถิ่น  l สุขหยุดโรค l 20-02-65</td>
-		<td>6,550</td>
-		<td><a href= https://www.youtube.com/watch?v=H_7IhQavLEI>link</a></td>
-		</tr>
-		<tr>
-		<td>32</td>
-		<td>นาทีระทึก! เฮลิคอปเตอร์ตก ขณะนักท่องเที่ยวเล่นน้ำ | TNNข่าวเที่ยง | 20-2-65</td>
-		<td>151,693</td>
-		<td><a href= https://www.youtube.com/watch?v=0c7jJGWxqcQ>link</a></td>
-		</tr>
-		<tr>
-		<td>33</td>
-		<td>จับตา! วิกฤตยูเครน-รัสเซีย สงครามประสาทส่งสัญญาณถึงสหรัฐฯ | TNNข่าวเที่ยง | 20-2-65</td>
-		<td>73,219</td>
-		<td><a href= https://www.youtube.com/watch?v=RIkBP4hintA>link</a></td>
-		</tr>
-		<tr>
-		<td>34</td>
-		<td>ยูเครนถูกโจมตีทางไซเบอร์แบบ DDoS ครั้งใหญ่ที่สุดในประวัติศาสตร์! | TNN Tech Reports</td>
-		<td>22,999</td>
-		<td><a href= https://www.youtube.com/watch?v=mR_4R6ygLSU>link</a></td>
-		</tr>
-		<tr>
-		<td>35</td>
-		<td>เปิดหลักฐานรัสเซีย มีแผนทำสงครามครั้งใหญ่สุดในยุโรป | TNNข่าวเที่ยง | 20-2-65</td>
-		<td>147,258</td>
-		<td><a href= https://www.youtube.com/watch?v=extbJkkMpGE>link</a></td>
-		</tr>
-		<tr>
-		<td>36</td>
-		<td>โควิดไทยขาขึ้น! หวั่นติดเชื้อทะลุ 50,000 คนต่อวัน | TNNข่าวเที่ยง | 20-2-65</td>
-		<td>20,051</td>
-		<td><a href= https://www.youtube.com/watch?v=ikAlKG1I_68>link</a></td>
-		</tr>
-		<tr>
-		<td>37</td>
-		<td>“ไทยเปิดประเทศ” ฟื้นศก. ความสำเร็จนโยบาย “สู้โควิด-19” l TNN News ข่าวเช้า l 20-02-2022</td>
-		<td>103,140</td>
-		<td><a href= https://www.youtube.com/watch?v=EJPonawYe0Y>link</a></td>
-		</tr>
-		<tr>
-		<td>38</td>
-		<td>เปิด “ขีปนาวุธรุ่นใหม่” รัสเซียติดหัวรบนิวเคลียร์ ยิงข้ามทวีป l TNN News ข่าวเช้า l 20-02-2022</td>
-		<td>91,930</td>
-		<td><a href= https://www.youtube.com/watch?v=fwnSXynOu-Y>link</a></td>
-		</tr>
-		<tr>
-		<td>39</td>
-		<td>1 มี.ค. ญี่ปุ่นเปิดประเทศ รับชาวต่างชาติ-เสี่ยงสูงกักตัว l TNN News ข่าวเช้า l 09-02-2022</td>
-		<td>11,411</td>
-		<td><a href= https://www.youtube.com/watch?v=IY7QtBANAO8>link</a></td>
-		</tr>
-		<tr>
-		<td>40</td>
-		<td>เชียงใหม่!โควิดพุ่ง 2,999 คน ชัยภูมอ่วม!แก้วเดียวกันลามหนัก | TNN ข่าวดึก | 19 ก.พ. 65</td>
-		<td>39,065</td>
-		<td><a href= https://www.youtube.com/watch?v=ccJm3d0HshI>link</a></td>
-		</tr>
-		<tr>
-		<td>41</td>
-		<td>เปิดภาพยุโรปพังราบ! พายุ"ยูนีซ"รุนแรงสุดประวัติศาสตร์ | TNN ข่าวดึก | 19 ก.พ. 65</td>
-		<td>64,175</td>
-		<td><a href= https://www.youtube.com/watch?v=-IUb0ujQ2ys>link</a></td>
-		</tr>
-		<tr>
-		<td>42</td>
-		<td>ไบเดนลั่น! โควิดอันตราย ขยายภาวะฉุกเฉินออกไป 1 ปี | TNN ข่าวดึก | 19 ก.พ. 65</td>
-		<td>31,447</td>
-		<td><a href= https://www.youtube.com/watch?v=uVnc1cnJNKA>link</a></td>
-		</tr>
-		<tr>
-		<td>43</td>
-		<td>"ปูติน" นั่งบัญชาการเอง รัสเซีย!ยิงขีปนาวุธ "เร็วเหนือเสียง" | TNN ข่าวดึก | 19 ก.พ. 65</td>
-		<td>372,601</td>
-		<td><a href= https://www.youtube.com/watch?v=WPFsok-PmlA>link</a></td>
-		</tr>
-		<tr>
-		<td>44</td>
-		<td>BA.2 ร้ายกาจแค่ไหน? แทนที่ BA.1 ปลาย ก.พ.นี้ | ข่าวดัง สุดสัปดาห์ 19-02-2565</td>
-		<td>40,788</td>
-		<td><a href= https://www.youtube.com/watch?v=keRIWNbOsQw>link</a></td>
-		</tr>
-		<tr>
-		<td>45</td>
-		<td>เกาหลีใต้ติดโควิดพุ่ง 1แสนคน ชาติยุโรปยกเลิกมาตรการ | ข่าวดัง สุดสัปดาห์ 19-02-2565</td>
-		<td>10,568</td>
-		<td><a href= https://www.youtube.com/watch?v=ExVAXp_ioLU>link</a></td>
-		</tr>
-		<tr>
-		<td>46</td>
-		<td>ถอดโควิดออกจาก “โรคฉุกเฉิน” ผลข้างเคียงวัคซีน “ใครจ่าย”? | ข่าวดัง สุดสัปดาห์ 19-02-2565</td>
-		<td>6,305</td>
-		<td><a href= https://www.youtube.com/watch?v=IvCt54CDI2k>link</a></td>
-		</tr>
-		<tr>
-		<td>47</td>
-		<td>Covid-19 ตัวเลขพุ่ง ชนวนประท้วง  l TNN World Today</td>
-		<td>17,879</td>
-		<td><a href= https://www.youtube.com/watch?v=rOUIN8g3pvk>link</a></td>
-		</tr>
-		<tr>
-		<td>48</td>
-		<td>รัสเซีย ภัยมั่นคง New Normal ของ EU? l TNN World Today</td>
-		<td>36,871</td>
-		<td><a href= https://www.youtube.com/watch?v=Xc8ko7KUStM>link</a></td>
-		</tr>
-		<tr>
-		<td>49</td>
-		<td>เลือกตั้งฝรั่งเศส มาครงได้ไปต่อ? l TNN World Today</td>
-		<td>14,167</td>
-		<td><a href= https://www.youtube.com/watch?v=MFtcvr3jsdU>link</a></td>
-		</tr>
-		<tr>
-		<td>50</td>
-		<td>หิมะถล่มสหรัฐฯ!รถชนกว่า 100 คัน “พายุยูนีซ”ซัดยุโรปตายแล้ว 9 | TNN ข่าวค่ำ | 19 ก.พ. 65</td>
-		<td>14,133</td>
-		<td><a href= https://www.youtube.com/watch?v=ZWW954wdNiM>link</a></td>
-		</tr>
-		<tr>
-		<td>51</td>
-		<td>ฟังมุมมองคนไทยในรัสเซีย “ปูติน”จะบุกโจมตียูเครน? | TNN ข่าวค่ำ | 19 ก.พ. 65</td>
-		<td>119,032</td>
-		<td><a href= https://www.youtube.com/watch?v=S_7Y0RaZxNg>link</a></td>
-		</tr>
-		<tr>
-		<td>52</td>
-		<td>เปิดแผนอพยพคนไทยในยูเครน หากวิกฤตขัดแย้งรัสเซียรุนแรงขึ้น! | TNN ข่าวค่ำ | 19 ก.พ. 65</td>
-		<td>14,445</td>
-		<td><a href= https://www.youtube.com/watch?v=TsWgO01igUU>link</a></td>
-		</tr>
-		<tr>
-		<td>53</td>
-		<td>“กองทัพรัสเซีย”เคลื่อนไหว! ตั้งรพ.สนามติดชายแดน“ยูเครน” | TNN ข่าวค่ำ | 19 ก.พ. 65</td>
-		<td>137,538</td>
-		<td><a href= https://www.youtube.com/watch?v=QXtCIEFUYDQ>link</a></td>
-		</tr>
-		<tr>
-		<td>54</td>
-		<td>กรมวิทย์ฯยังไม่พบโอมิครอนBA.2แรงกว่าเดลตา TNNข่าวค่ำ วันที่ 19 ก.พ.</td>
-		<td>36,079</td>
-		<td><a href= https://www.youtube.com/watch?v=nweNxNgXR3E>link</a></td>
-		</tr>
-		<tr>
-		<td>55</td>
-		<td>ชัด!ภาษีคริปโต สรรพากร-นักวิชาการ แจงครบทุกข้อถกเถียง  I TNN Tech Reports Weekly I 19 ก.พ. 65</td>
-		<td>2,296</td>
-		<td><a href= https://www.youtube.com/watch?v=NDmRuJfR9NE>link</a></td>
-		</tr>
-		<tr>
-		<td>56</td>
-		<td>‘การหนีออกจากยูเครน’ ของนักธุรกิจชาวอังกฤษ</td>
-		<td>19,976</td>
-		<td><a href= https://www.youtube.com/watch?v=3LwEhBgECss>link</a></td>
-		</tr>
-		<tr>
-		<td>57</td>
-		<td>สงครามน้ำลาย "ไบเดน-ปูติน" คาดกองรบรัสเซียจ่อยูเครน 2 แสนนาย | TNN ข่าวเย็น | 19-02-22</td>
-		<td>43,601</td>
-		<td><a href= https://www.youtube.com/watch?v=xnsbR1U-AnY>link</a></td>
-		</tr>
-		<tr>
-		<td>58</td>
-		<td>เปิดสาเหตุไทยหนาวอีกรอบ 23 ก.พ.นี้มาแน่ต่ำกว่า 20 องศาฯ | TNN ข่าวเย็น | 19-02-22</td>
-		<td>118,517</td>
-		<td><a href= https://www.youtube.com/watch?v=QbIp74JRj9A>link</a></td>
-		</tr>
-		<tr>
-		<td>59</td>
-		<td>เคล็ด(ไม่)ลับ ทดสอบมะม่วงสุกพร้อมทาน ด้วยการ "เทสน้ำ" | เกษตรนิวเจน</td>
-		<td>6,646</td>
-		<td><a href= https://www.youtube.com/watch?v=JL0Ab8yZKAU>link</a></td>
-		</tr>
-		<tr>
-		<td>60</td>
-		<td>เกษตรกรเมืองอุทัยฯ ปลูกมะม่วงเกรดเอ หวังคนไทยได้กินของดี | เกษตรนิวเจน</td>
-		<td>6,918</td>
-		<td><a href= https://www.youtube.com/watch?v=Og4pejGjICM>link</a></td>
-		</tr>
-		<tr>
-		<td>61</td>
-		<td>เปิด "ตลาดมะม่วงโลก" ผลไม้เมืองร้อนยอดฮิต | เกษตรนิวเจน</td>
-		<td>8,840</td>
-		<td><a href= https://www.youtube.com/watch?v=Bn7NX87oLTk>link</a></td>
-		</tr>
-		<tr>
-		<td>62</td>
-		<td>นึกว่าฉากหนัง! เกิดรถชนกว่า 100 คันรวดขณะพายุหิมะถล่มสหรัฐฯ | TNNข่าวเที่ยง | 19-2-65</td>
-		<td>23,508</td>
-		<td><a href= https://www.youtube.com/watch?v=Gu-ZP1CWeGk>link</a></td>
-		</tr>
-		<tr>
-		<td>63</td>
-		<td>“ไบเดน” แถลงมั่นใจรัสเซียจะบุกยูเครน ตั้งเป้าโจมตีกรุงเคียฟ | TNNข่าวเที่ยง | 19-2-65</td>
-		<td>73,555</td>
-		<td><a href= https://www.youtube.com/watch?v=IQa54scIGy0>link</a></td>
-		</tr>
-		<tr>
-		<td>64</td>
-		<td>“โควิดไทย”พุ่งต่อเนื่อง-จำนวนเตียง กทม.เริ่มใกล้เต็ม TNNข่าวเที่ยง วันที่ 19 ก.พ.65</td>
-		<td>32,880</td>
-		<td><a href= https://www.youtube.com/watch?v=Q_ts7xFj8RY>link</a></td>
-		</tr>
-		<tr>
-		<td>65</td>
-		<td>จีนตั้งเป้าสร้างสถานีอวกาศให้เสร็จในปี 2022! | TNN Tech Reports</td>
-		<td>5,316</td>
-		<td><a href= https://www.youtube.com/watch?v=W-zQ_qN-EHU>link</a></td>
-		</tr>
-		<tr>
-		<td>66</td>
-		<td>โอมิครอน BA.2 พบในไทยมากขึ้นแต่ไม่รุนแรง - ผับดังศรีราชาแจ้งกลุ่มเสี่ยง | TNNข่าวเที่ยง | 19-2-65</td>
-		<td>22,666</td>
-		<td><a href= https://www.youtube.com/watch?v=7w-lRcsDQoo>link</a></td>
-		</tr>
-		<tr>
-		<td>67</td>
-		<td>1ปี มี1ครั้ง พระพุทธบาทเวินปลา ปรากฎกลางน้ำโขง I 19-2-65</td>
-		<td>37,237</td>
-		<td><a href= https://www.youtube.com/watch?v=PVBnw0nKtPY>link</a></td>
-		</tr>
-		<tr>
-		<td>68</td>
-		<td>โควิด-19 ตัวเร่งใช้หุ่นยนต์เพิ่ม I EEC Focus I 19-02-65</td>
-		<td>48,810</td>
-		<td><a href= https://www.youtube.com/watch?v=55uLZjAs4mk>link</a></td>
-		</tr>
-		<tr>
-		<td>69</td>
-		<td>พายุ “ยูนิช” ถล่มยุโรปอ่วม! ดินถล่มบราซิลเสียชีวิต 117 ราย l TNN News ข่าวเช้า l 19-02-2022</td>
-		<td>34,103</td>
-		<td><a href= https://www.youtube.com/watch?v=6JbSyZJTpgc>link</a></td>
-		</tr>
-		<tr>
-		<td>70</td>
-		<td>TNN Tech Reports Weekly 19 กุมภาพันธ์ 2565 เวลา 09.30-10.00 น.</td>
-		<td>845</td>
-		<td><a href= https://www.youtube.com/watch?v=62nvdzLEViM>link</a></td>
-		</tr>
-		<tr>
-		<td>71</td>
-		<td>เบื้องลึกรัสเซียขับทูตสหรัฐฯ ยูเครน ระอุ ปูตินสั่งยิงขีปนาวุธ l TNN News ข่าวเช้า l 19-02-2022</td>
-		<td>241,809</td>
-		<td><a href= https://www.youtube.com/watch?v=qxrOG-bGlB8>link</a></td>
-		</tr>
-		<tr>
-		<td>72</td>
-		<td>กทม.ลดฮวบ 4 องศาฯ เตือนอากาศแปรปรวนทั่วประเทศ l TNN News ข่าวเช้า l 19-02-2022</td>
-		<td>44,335</td>
-		<td><a href= https://www.youtube.com/watch?v=1ODGuTz_lf8>link</a></td>
-		</tr>
-		<tr>
-		<td>73</td>
-		<td>วิเคราะห์! ใครได้-ใครเสีย สงคราม “โหมโรง"  รัสเซีย-ยูเครน | TNN ข่าวดึก | 18 ก.พ. 65</td>
-		<td>108,663</td>
-		<td><a href= https://www.youtube.com/watch?v=gtAPczV4hvU>link</a></td>
-		</tr>
-		<tr>
-		<td>74</td>
-		<td>รัฐวางเป้าดึงซาอุฯ เที่ยวไทย 2 แสนคน โกยรายได้ 2 หมื่นล้านบาท  | ย่อโลกเศรษฐกิจ 18 ก.พ.65</td>
-		<td>5,143</td>
-		<td><a href= https://www.youtube.com/watch?v=6s1jJEyNrjw>link</a></td>
-		</tr></tbody>
-</table>
-<p>74/180</p>
-</font>
 </body>
+
 </html>
