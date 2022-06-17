@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SectionCheck</title>
+
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<style>
+	* {
+		font-family: 'Sarabun', sans-serif;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		font-size: 62.5%;
+	}
+
+	body {
+		background: url(bgnoise.png)
+	}
+
+	.inputBox {
+		width: 7.5rem;
+		color: #aaa;
+		/* margin-left: 1rem; */
+		margin-right: 0.5rem;
+		padding: 0.6rem;
+		border: 1px solid #555;
+		border-radius: 5px;
+		font-size: 1.6rem;
+		background-color: #e1f1ff;
+	}
+
+	.inputBox:focus,
+	.inputBox:active {
+		background-color: #acd3ff;
+		/* border: 12px solid #555; */
+	}
+
+	.inputBox.modified {
+		color: black
+	}
+
+	.outputBox {
+		width: 8rem;
+		color: #aaa;
+		border-radius: 1px;
+		padding: 4px;
+		font-size: 1.6rem;
+		background-color: #fffec5;
+	}
+
+	.outputBox.modified {
+		color: black
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		max-width: 60rem;
+		margin: 3rem auto;
+		column-gap: 15%;
+		row-gap: 1rem;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.grid h3 {
+		grid-column: 1/-1;
+		font-size: 1.6rem;
+		font-weight: 500;
+	}
+
+	.SingleInput {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		/* display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 1rem */
+	}
+
+	label {
+		font-size: 1.6rem
+	}
+</style>
+
+<body>
+	<button id="change-language">change langauge</button>
+	<button id="calculateAndUpdateResult">calculateAndUpdateResult</button>
+	<button id="redrawSVG">redrawSVG</button>
+	<script>
+		document.querySelector('#calculateAndUpdateResult').addEventListener('click', function () {
+			calculateAndUpdateResult()
+		})
+		document.querySelector('#redrawSVG').addEventListener('click', function () {
+			redrawSVG()
+		})
+
+	</script>
+	<svg width="200" height="200" viewBox="0 0 0 0">
+		<rect x="0" y="0" width="30" height="30" stroke="black" fill="transparent" stroke-width="5" />
+		<g class="topbar firstLayerList"></g>
+		<g class="topbar secondLayerList"></g>
+		<g class="bottombar secondLayerList"></g>
+		<g class="bottombar firstLayerList"></g>
+	</svg>
+
+
+	<div class="grid">
+		<h3 data-language='["dimension","ขนาด"]'>dimension</h3>
+		<div class="SingleInput">
+			<label data-language='["height","ความสูง"]'>height:</label>
+			<div>
+				<input id="height" class="inputBox" type="text" placeholder="height" data-storepath='dimensionβheight'>
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["width","ความกว้าง"]'>width:</label>
+			<div>
+				<input id="width" class="inputBox" type="text" placeholder="width" data-storepath='dimensionβwidth'>
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["covering","ระยะหุ้ม"]'>covering:</label>
+			<div>
+				<input id="covering" class="inputBox" type="text" placeholder="covering"
+					data-storepath='dimensionβcovering'>
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["clear distance between bar layer","ระยะ"]'>clear distance between bar layer:</label>
+			<div>
+				<input id="covering" class="inputBox" type="text" placeholder="clear distance"
+					data-storepath='dimensionβclearDistanceBetweenBarLayer'>
+				<label>mm</label>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="grid">
+		<h3>topbarFirstLayer</h3>
+		<div class="SingleInput">
+			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+			<div>
+				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
+					data-command="changeBarDiameter">
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+			<div>
+				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
+					data-command="changeArrayLength">
+				<label></label>
+			</div>
+		</div>
+
+		<h3>topbarSecondLayer</h3>
+		<div class="SingleInput">
+			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+			<div>
+				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
+					data-command="changeBarDiameter">
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+			<div>
+				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
+					data-command="changeArrayLength">
+				<label></label>
+			</div>
+		</div>
+
+
+		<h3>bottombarSecondLayer</h3>
+		<div class="SingleInput">
+			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+			<div>
+				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
+					data-command="changeBarDiameter">
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+			<div>
+				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
+					data-command="changeArrayLength">
+				<label></label>
+			</div>
+		</div>
+
+		<h3>bottombarFirstLayer</h3>
+		<div class="SingleInput">
+			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+			<div>
+				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
+					data-command="changeBarDiameter">
+				<label>mm</label>
+			</div>
+		</div>
+		<div class="SingleInput">
+			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+			<div>
+				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
+					data-command="changeArrayLength">
+				<label></label>
+			</div>
+		</div>
+	</div>
+
+	<div class="outputBox" id="area" data-storepath='dimensionβarea'></div>
+	<div class="outputBox" id="parameter" data-storepath='dimensionβparameter'></div>
+
+
+
+	<script>
+		const beamObj = {
+			dimension: {
+				height: 400,
+				width: 200,
+				covering: 30,
+				clearDistanceBetweenBarLayer: 20
+			},
+			topbar: {
+				firstLayerList: [{ diameter: 20, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 20, x: "", y: "" }],
+				secondLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+			},
+			bottombar: {
+				firstLayerList: [{ diameter: 20, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 20, x: "", y: "" }],
+				secondLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+			},
+			stirrup: 9,
+			materialStrength: {
+				concrete: 28,
+				steel: 240
+			},
+
+
+		}
+
+		document.querySelector("#change-language").addEventListener("click", function () {
+			const lang = document.querySelector("html").getAttribute("lang")
+			if (lang == "en") {
+				document.querySelector("html").setAttribute("lang", "th")
+				document.querySelectorAll("[data-language]").forEach(El => {
+					languageData = JSON.parse(El.getAttribute("data-language"))
+					El.textContent = El.textContent.replace(languageData[0], languageData[1])
+				})
+			} else {
+				document.querySelector("html").setAttribute("lang", "en")
+				document.querySelectorAll("[data-language]").forEach(El => {
+					languageData = JSON.parse(El.getAttribute("data-language"))
+					El.textContent = El.textContent.replace(languageData[1], languageData[0])
+				})
+			}
+		})
+
+		inititialize()
+		function inititialize() {
+			retriveAllDataFromDatabaseToInputEl()
+			calculateAndUpdateResult()
+			redrawSVG()
+		}
+
+
+		function retriveAllDataFromDatabaseToInputEl() {
+			document.querySelectorAll('.inputBox').forEach(El => {
+				retriveOneDataFromDatabaseToInputEl(El)
+			})
+		}
+
+		function retriveOneDataFromDatabaseToInputEl(El) {
+			storepath = El.getAttribute('data-storepath').split('β')
+			// console.log(storepath)
+			command = El.getAttribute('data-command')
+			if (retrive(beamObj, storepath, command) != "don't have any value to be retrived") {
+				El.value = retrive(beamObj, storepath, command)
+			}
+		}
+
+		// document.querySelector("input#height").setAttribute("style", "margin-right:71px");
+		// document.querySelector("input#height").style.marginLeft = "30px";
+
+		document.querySelectorAll(".inputBox").forEach(El => {
+			El.addEventListener("focus", function (e) {
+				El.classList.add("modified")
+
+				document.querySelectorAll(".outputBox").forEach(El => {
+					El.classList.add("modified")
+				})
+			})
+
+
+
+			El.addEventListener("change", function (e) {
+				inputDataToDatabase(El)
+				retriveAllDataFromDatabaseToInputEl()
+				calculateAndUpdateResult()
+				redrawSVG()
+			})
+		})
+
+		function inputDataToDatabase(El) {
+			storepath = El.getAttribute("data-storepath").split('β')
+			command = El.getAttribute("data-command")
+			assign(beamObj, storepath, El.value * 1, command)
+		}
+
+		function calculateAndUpdateResult() {
+			beamObj.dimension.area = beamObj.dimension.height * 1 * beamObj.dimension.width * 1;
+			beamObj.dimension.parameter = 2 * (beamObj.dimension.height * 1 + beamObj.dimension.width * 1);
+
+			let topFirstLayerMaxDia = 0
+
+			for (let i = 0; i < beamObj.topbar.firstLayerList.length; i++) {
+				let horizontalBarSpacing = beamObj.dimension.width / (beamObj.topbar.firstLayerList.length - 1)
+				// console.log(i)
+				beamObj.topbar.firstLayerList[i].x = horizontalBarSpacing * i
+				// console.log(horizontalBarSpacing * i, i)
+				// console.log(beamObj.topbar.firstLayerList[i].x, i)
+				// console.log(beamObj, i)
+				// console.log(beamObj.topbar.firstLayerList[i], i)
+				beamObj.topbar.firstLayerList[i].y = beamObj.dimension.covering * 1 + beamObj.topbar.firstLayerList[i].diameter * 1 / 2
+				if (beamObj.topbar.firstLayerList[i].diameter * 1 > topFirstLayerMaxDia) {
+					topFirstLayerMaxDia = beamObj.topbar.firstLayerList[i].diameter * 1
+				}
+				// console.log(topFirstLayerMaxDia, i)
+			}
+
+			for (let i = 0; i < beamObj.topbar.secondLayerList.length; i++) {
+				let horizontalBarSpacing = beamObj.dimension.width / (beamObj.topbar.secondLayerList.length - 1)
+
+				beamObj.topbar.secondLayerList[i].x = horizontalBarSpacing * i
+				beamObj.topbar.secondLayerList[i].y = beamObj.dimension.covering * 1 + topFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.topbar.secondLayerList[i].diameter * 1 / 2
+			}
+
+			let bottomFirstLayerMaxDia = 0
+
+			for (let i = 0; i < beamObj.bottombar.firstLayerList.length; i++) {
+				let horizontalBarSpacing = beamObj.dimension.width / (beamObj.bottombar.firstLayerList.length - 1)
+
+				beamObj.bottombar.firstLayerList[i].x = horizontalBarSpacing * i
+				beamObj.bottombar.firstLayerList[i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + beamObj.bottombar.firstLayerList[i].diameter * 1 / 2)
+				if (beamObj.bottombar.firstLayerList[i].diameter * 1 > bottomFirstLayerMaxDia) {
+					bottomFirstLayerMaxDia = beamObj.bottombar.firstLayerList[i].diameter * 1
+				}
+			}
+
+			for (let i = 0; i < beamObj.bottombar.secondLayerList.length; i++) {
+				let horizontalBarSpacing = beamObj.dimension.width / (beamObj.bottombar.secondLayerList.length - 1)
+
+				beamObj.bottombar.secondLayerList[i].x = horizontalBarSpacing * i
+				beamObj.bottombar.secondLayerList[i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + bottomFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.bottombar.secondLayerList[i].diameter * 1 / 2)
+			}
+
+			// for (let i = 0; i < topBottom.length; i++) {
+			// 	for (let j = 0; j < firstSecond.length; j++) {
+			// 		horizontalBarSpacing = beamObj.dimension.width / (beamObj[topBottom[i]][firstSecond[j]].length - 1)
+
+			// 		beamObj[topBottom[i]][firstSecond[j]].forEach(function (El, index) {
+			// 			beamObj[topBottom[i]][firstSecond[j]][index].x = horizontalBarSpacing * index
+			// 			beamObj[topBottom[i]][firstSecond[j]][index].y = beamObj.dimension.covering * 1 + beamObj[topBottom[i]][firstSecond[j]][index].diameter * 1 / 2
+			// 		})
+			// 	}
+			// }
+			console.log("finished calculating result")
+
+			ResultPrintOutToOutputEl()
+		}
+
+		function ResultPrintOutToOutputEl() {
+			document.querySelectorAll(".outputBox").forEach(EL => {
+				EL.innerHTML = retrive(beamObj, EL.getAttribute("data-storepath").split('β'))
+			})
+		}
+
+		function redrawSVG() {
+			redrawSVGdimension()
+			redrawSVGbar()
+		}
+		function redrawSVGdimension() {
+			const svg = document.querySelector("svg")
+			strokeWidth = 3
+			// const strokeWidth = Math.max(beamObj.dimension.height, beamObj.dimension.width) / 100
+			svg.setAttribute("viewBox", `${-strokeWidth / 2} ${-strokeWidth / 2} ${beamObj.dimension.width + strokeWidth} ${beamObj.dimension.height + strokeWidth}`);
+
+			svg.querySelector("rect").setAttribute("width", beamObj.dimension.width)
+			svg.querySelector("rect").setAttribute("height", beamObj.dimension.height)
+			svg.querySelector("rect").setAttribute("stroke-width", strokeWidth)
+		}
+		function redrawSVGbar() {
+			console.log("start drawing SVG")
+
+			TB = ["topbar", "bottombar"]
+			FS = ["firstLayerList", "secondLayerList"]
+
+			for (let i = 0; i < TB.length; i++) {
+				for (let j = 0; j < FS.length; j++) {
+					const svgBarLayerGroup = document.querySelector(`svg g.${TB[i]}.${FS[j]}`)
+
+					// console.log(beamObj[TB[i]][FS[j]])
+					string = ""
+					for (index = 0; index < beamObj[TB[i]][FS[j]].length; index++) {
+						string += `<circle class='' cx='${beamObj[TB[i]][FS[j]][index].x * 1}' cy='${beamObj[TB[i]][FS[j]][index].y * 1}' r='${beamObj[TB[i]][FS[j]][index].diameter * 1 / 2}' data-storepath='${TB[i]}β^${FS[j]}β${index}βdiameter'/>`
+					}
+					svgBarLayerGroup.innerHTML = string
+
+
+
+					svgBarLayerGroup.querySelectorAll(`svg g.${TB[i]}.${FS[j]} circle`).forEach(circleEl => {
+						circleEl.addEventListener("click", function (e) {
+							storepath = circleEl.getAttribute("data-storepath").split("β")
+
+							let newDiameter = prompt("Please enter new diameter", retrive(beamObj, storepath));
+							if (newDiameter != null) {
+								assign(beamObj, storepath, newDiameter * 1)
+								retriveAllDataFromDatabaseToInputEl()
+								calculateAndUpdateResult()
+								redrawSVG()
+							}
+
+						})
+					})
+				}
+			}
+
+
+
+
+		}
+
+		function assign(returnObj, storepath, value, command) {
+			unreplacedstorepath = storepath
+
+
+			for (i = 0; i < storepath.length - 1; i++) {
+
+				if (storepath[i][0] != "^") {
+
+					if (!(storepath[i] in returnObj)) {
+						returnObj[storepath[i]] = {}
+					}
+					returnObj = returnObj[storepath[i]]
+					// console.log(returnObj)
+
+
+				} else if (storepath[i][0] === "^") {
+					storepath[i] = storepath[i].toString().replace("^", "")
+					// console.log(storepath[i])
+					if (!(storepath[i] in returnObj)) {
+						returnObj[storepath[i]] = []
+					}
+					returnObj = returnObj[storepath[i]]
+				}
+			}
+
+			// go to deepest level of storepath
+			deepestPathName = storepath[storepath.length - 1].toString().replace("^", "")
+			// → returnObj[deepestPathName]
+			if (!(Array.isArray(returnObj[deepestPathName]))) {
+				returnObj[deepestPathName] = value
+				// console.log(returnObj[deepestPathName])
+			} else {
+
+				if (command == "changeBarDiameter") {
+					for (let i = 0; i < returnObj[deepestPathName].length; i++) {
+						returnObj[deepestPathName][i].diameter = value
+					}
+
+				} else if (command == "changeArrayLength") {
+					while (returnObj[deepestPathName].length < value) {
+						if (returnObj[deepestPathName].length != 0) {
+							returnObj[deepestPathName].push({ diameter: returnObj[deepestPathName][returnObj[deepestPathName].length - 1].diameter })
+						} else {
+							// console.log(unreplacedstorepath.join("β"))
+							if (document.querySelectorAll(`[data-storepath='${unreplacedstorepath.join("β")}']`)[0].value * 1 > 0) {
+								returnObj[deepestPathName].push({ diameter: document.querySelectorAll(`[data-storepath='${unreplacedstorepath.join("β")}']`)[0].value * 1 })
+							} else {
+								returnObj[deepestPathName].push({ diameter: 20, x: "", y: "" })
+							}
+						}
+					}
+
+					while (returnObj[deepestPathName].length > value) {
+						returnObj[deepestPathName].pop()
+					}
+
+					// console.log(returnObj[deepestPathName].length)
+
+					// returnObj[deepestPathName][storepath[storepath.length - 1]].forEach(item => {
+					// 	item = value
+					// })
+				}
+			}
+			console.log(beamObj)
+
+		}
+
+
+		function retrive(returnObj, storepath) {
+			for (i = 0; i < storepath.length - 1; i++) {
+				storepath[i] = storepath[i].toString().replace("^", "")
+				returnObj = returnObj[storepath[i]]
+			}
+
+			// go to deepest level of storepath
+			deepestPathName = storepath[storepath.length - 1].toString().replace("^", "")
+			if (!(Array.isArray(returnObj[deepestPathName]))) {
+				return returnObj[deepestPathName]
+			} else {
+				if (command == "changeBarDiameter") {
+					boolean = true
+					for (i = 0; i < returnObj[deepestPathName].length - 1; i++) {
+						if (returnObj[deepestPathName][i].diameter != returnObj[deepestPathName][i + 1].diameter) {
+							boolean = false
+							break
+						}
+					}
+					if (boolean) {
+						if (returnObj[deepestPathName].length == 0) {
+							return "don't have any value to be retrived"
+						} else {
+							return returnObj[deepestPathName][0].diameter
+						}
+					} else {
+						return -1
+					}
+
+
+				} else if (command == "changeArrayLength") {
+					return returnObj[deepestPathName].length
+				}
+				console.log(beamObj)
+			}
+		}
+
+
+	</script>
+</body>
+
+</html>
