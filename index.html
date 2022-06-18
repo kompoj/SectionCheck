@@ -81,7 +81,7 @@
 		font-weight: 500;
 	}
 
-	.SingleInput {
+	.eachInput {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		align-items: center;
@@ -119,111 +119,118 @@
 
 
 	<div class="grid">
-		<h3 data-language='["dimension","ขนาด"]'>dimension</h3>
-		<div class="SingleInput">
-			<label data-language='["height","ความสูง"]'>height:</label>
+		<h3 data-language='dimensionβขนาด'>dimension</h3>
+
+		<div class="eachInput">
+			<label data-language='heightβความสูง'>height:</label>
 			<div>
-				<input id="height" class="inputBox" type="text" placeholder="height" data-storepath='dimensionβheight'>
+
+				<input id="height" class="inputBox" type="number" placeholder="height" data-storepath='dimensionβheight'
+					min="0" step="10">
+
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["width","ความกว้าง"]'>width:</label>
+
+		<div class="eachInput">
+			<label data-language='widthβความกว้าง'>width:</label>
 			<div>
-				<input id="width" class="inputBox" type="text" placeholder="width" data-storepath='dimensionβwidth'>
+				<input id="width" class="inputBox" type="number" placeholder="width" data-storepath='dimensionβwidth'
+					min="0" step="10">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["covering","ระยะหุ้ม"]'>covering:</label>
+
+		<div class="eachInput">
+			<label data-language='coveringβระยะหุ้ม'>covering:</label>
 			<div>
-				<input id="covering" class="inputBox" type="text" placeholder="covering"
-					data-storepath='dimensionβcovering'>
+				<input id="covering" class="inputBox" type="number" placeholder="covering"
+					data-storepath='dimensionβcovering' min="0" step="5">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["clear distance between bar layer","ระยะ"]'>clear distance between bar layer:</label>
+
+		<div class="eachInput">
+			<label data-language='clear distance between bar layerβระยะ'>clear distance between bar layer:</label>
 			<div>
-				<input id="covering" class="inputBox" type="text" placeholder="clear distance"
-					data-storepath='dimensionβclearDistanceBetweenBarLayer'>
+				<input id="covering" class="inputBox" type="number" placeholder="clear distance"
+					data-storepath='dimensionβclearDistanceBetweenBarLayer' min="0" step="5">
 				<label>mm</label>
 			</div>
 		</div>
 	</div>
 
 
-
 	<div class="grid">
 		<h3>topbarFirstLayer</h3>
-		<div class="SingleInput">
-			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+		<div class="eachInput">
+			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
 				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
-					data-command="changeBarDiameter">
+					data-command="changeBarDiameter" min="0" max="40">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+		<div class="eachInput">
+			<label data-language='quantityβจำนวน'>quantity:</label>
 			<div>
 				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
-					data-command="changeArrayLength">
+					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
 		</div>
 
 		<h3>topbarSecondLayer</h3>
-		<div class="SingleInput">
-			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+		<div class="eachInput">
+			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
 				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
-					data-command="changeBarDiameter">
+					data-command="changeBarDiameter" min="0" max="40">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+		<div class="eachInput">
+			<label data-language='quantityβจำนวน'>quantity:</label>
 			<div>
 				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
-					data-command="changeArrayLength">
+					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
 		</div>
 
 
 		<h3>bottombarSecondLayer</h3>
-		<div class="SingleInput">
-			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+		<div class="eachInput">
+			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
 				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
-					data-command="changeBarDiameter">
+					data-command="changeBarDiameter" min="0" max="40">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+		<div class="eachInput">
+			<label data-language='quantityβจำนวน'>quantity:</label>
 			<div>
 				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
-					data-command="changeArrayLength">
+					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
 		</div>
 
 		<h3>bottombarFirstLayer</h3>
-		<div class="SingleInput">
-			<label data-language='["diameter","เส้นผ่านศูนย์กลาง"]'>diameter:</label>
+		<div class="eachInput">
+			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
 				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
-					data-command="changeBarDiameter">
+					data-command="changeBarDiameter" min="0" max="40">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="SingleInput">
-			<label data-language='["quantity","จำนวน"]'>quantity:</label>
+		<div class="eachInput">
+			<label data-language='quantityβจำนวน'>quantity:</label>
 			<div>
 				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
-					data-command="changeArrayLength">
+					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
 		</div>
@@ -264,13 +271,13 @@
 			if (lang == "en") {
 				document.querySelector("html").setAttribute("lang", "th")
 				document.querySelectorAll("[data-language]").forEach(El => {
-					languageData = JSON.parse(El.getAttribute("data-language"))
+					languageData = El.getAttribute("data-language").split("β")
 					El.textContent = El.textContent.replace(languageData[0], languageData[1])
 				})
 			} else {
 				document.querySelector("html").setAttribute("lang", "en")
 				document.querySelectorAll("[data-language]").forEach(El => {
-					languageData = JSON.parse(El.getAttribute("data-language"))
+					languageData = El.getAttribute("data-language").split("β")
 					El.textContent = El.textContent.replace(languageData[1], languageData[0])
 				})
 			}
@@ -292,9 +299,9 @@
 
 		function retriveOneDataFromDatabaseToInputEl(El) {
 			storepath = El.getAttribute('data-storepath').split('β')
-			// console.log(storepath)
 			command = El.getAttribute('data-command')
-			if (retrive(beamObj, storepath, command) != "don't have any value to be retrived") {
+
+			if (retrive(beamObj, storepath, command) != "don't have any value to be retrived" && retrive(beamObj, storepath, command) != 0) {
 				El.value = retrive(beamObj, storepath, command)
 			}
 		}
@@ -313,12 +320,14 @@
 
 
 
-			El.addEventListener("change", function (e) {
+			El.addEventListener("input", function (e) {
 				inputDataToDatabase(El)
 				retriveAllDataFromDatabaseToInputEl()
 				calculateAndUpdateResult()
 				redrawSVG()
 			})
+
+			El.addEventListener('wheel', () => { })
 		})
 
 		function inputDataToDatabase(El) {
@@ -537,6 +546,7 @@
 							break
 						}
 					}
+
 					if (boolean) {
 						if (returnObj[deepestPathName].length == 0) {
 							return "don't have any value to be retrived"
