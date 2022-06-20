@@ -1,22 +1,23 @@
 const beamObj = {
 	dimension: {
-		height: 400,
-		width: 200,
+		height: 500,
+		width: 250,
 		covering: 30,
 		clearDistanceBetweenBarLayer: 20
 	},
 	topbar: {
-		firstLayerList: [{ diameter: 20, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 20, x: "", y: "" }],
-		secondLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+		firstLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+		secondLayerList: [],
 	},
 	bottombar: {
-		firstLayerList: [{ diameter: 20, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 20, x: "", y: "" }],
+		firstLayerList: [{ diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }],
 		secondLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
 	},
 	stirrup: 9,
 	materialStrength: {
 		concrete: 28,
-		steel: 240
+		steel: 400,
+		stirrup: 240
 	},
 
 
@@ -27,13 +28,13 @@ document.querySelector("#change-language").addEventListener("click", function ()
 	if (lang == "en") {
 		document.querySelector("html").setAttribute("lang", "th")
 		document.querySelectorAll("[data-language]").forEach(El => {
-			let languageData = El.getAttribute("data-language").split("β")
+			let languageData = El.getAttribute("data-language").split("ю")
 			El.textContent = El.textContent.replace(languageData[0], languageData[1])
 		})
 	} else {
 		document.querySelector("html").setAttribute("lang", "en")
 		document.querySelectorAll("[data-language]").forEach(El => {
-			let languageData = El.getAttribute("data-language").split("β")
+			let languageData = El.getAttribute("data-language").split("ю")
 			El.textContent = El.textContent.replace(languageData[1], languageData[0])
 		})
 	}
@@ -62,11 +63,16 @@ function retriveAllDataFromDatabaseToInputEl() {
 }
 
 function retriveOneDataFromDatabaseToInputEl(El) {
-	const storepath = El.getAttribute('data-storepath').split('β')
+	const storepath = El.getAttribute('data-storepath').split('ю')
 	const command = El.getAttribute('data-command')
 
-	if (retrive(beamObj, storepath, command) != "don't have any value to be retrived" && retrive(beamObj, storepath, command) != 0) {
-		El.value = retrive(beamObj, storepath, command)
+	let retrivedValue = retrive(beamObj, storepath, command)
+	if (retrivedValue != "don't have any value to be retrived" && retrivedValue != 0) {
+
+		if (typeof retrivedValue == "string" && retrivedValue.includes("bars")) {
+			retrivedValue = retrivedValue.replace("bars", "") * 1
+		}
+		El.value = retrivedValue
 	}
 }
 
@@ -95,7 +101,7 @@ document.querySelectorAll(".inputBox").forEach(El => {
 })
 
 function inputDataToDatabase(El) {
-	const storepath = El.getAttribute("data-storepath").split('β')
+	const storepath = El.getAttribute("data-storepath").split('ю')
 	const command = El.getAttribute("data-command")
 	assign(beamObj, storepath, El.value * 1, command)
 }
@@ -104,77 +110,192 @@ function calculateAndUpdateResult() {
 	beamObj.dimension.area = beamObj.dimension.height * 1 * beamObj.dimension.width * 1;
 	beamObj.dimension.parameter = 2 * (beamObj.dimension.height * 1 + beamObj.dimension.width * 1);
 
+	const FS = ["firstLayerList", "secondLayerList"]
 	let topFirstLayerMaxDia = 0
+	let topbarTotalArea = 0
+	let topbarSumProductofYandA = 0
 
-	for (let i = 0; i < beamObj.topbar.firstLayerList.length; i++) {
-		// x position calculation
-		if (beamObj.topbar.firstLayerList.length == 1) {
-			beamObj.topbar.firstLayerList[i].x = beamObj.dimension.width / 2
-		} else if (beamObj.topbar.firstLayerList.length >= 2) {
-			let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.topbar.firstLayerList[0].diameter / 2 - beamObj.topbar.firstLayerList.at(-1).diameter / 2
-			let horizontalBarSpacing = horizontalLength / (beamObj.topbar.firstLayerList.length - 1)
+	FS.forEach(layer => {
+		for (let i = 0; i < beamObj.topbar[layer].length; i++) {
+			// x position calculation
+			if (beamObj.topbar[layer].length == 1) {
+				beamObj.topbar[layer][i].x = beamObj.dimension.width / 2
+			} else if (beamObj.topbar[layer].length >= 2) {
+				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.topbar[layer][0].diameter / 2 - beamObj.topbar[layer].at(-1).diameter / 2
+				let horizontalBarSpacing = horizontalLength / (beamObj.topbar[layer].length - 1)
 
-			beamObj.topbar.firstLayerList[i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.topbar.firstLayerList[0].diameter / 2 + horizontalBarSpacing * i
+				beamObj.topbar[layer][i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.topbar[layer][0].diameter / 2 + horizontalBarSpacing * i
+			}
+
+
+			// y position calculation
+			if (layer == "firstLayerList" && beamObj.topbar.firstLayerList[i].diameter * 1 > topFirstLayerMaxDia) {
+				topFirstLayerMaxDia = beamObj.topbar[layer][i].diameter * 1
+			}
+			if (layer == "firstLayerList") {
+				beamObj.topbar[layer][i].y = beamObj.dimension.covering * 1 + beamObj.stirrup + beamObj.topbar[layer][i].diameter * 1 / 2
+			} else if (layer == "secondLayerList") {
+				beamObj.topbar[layer][i].y = beamObj.dimension.covering * 1 + beamObj.stirrup + topFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.topbar.secondLayerList[i].diameter * 1 / 2
+			}
+
+			topbarTotalArea += Math.PI * beamObj.topbar[layer][i].diameter ** 2 / 4
+			topbarSumProductofYandA += beamObj.topbar[layer][i].y * (Math.PI * beamObj.topbar[layer][i].diameter ** 2 / 4)
+
 		}
+	})
+	beamObj.topbar.centroid = topbarSumProductofYandA / topbarTotalArea
+	beamObj.topbar.area = topbarTotalArea
 
 
-		// y position calculation
-		beamObj.topbar.firstLayerList[i].y = beamObj.dimension.covering * 1 + beamObj.stirrup + beamObj.topbar.firstLayerList[i].diameter * 1 / 2
-		if (beamObj.topbar.firstLayerList[i].diameter * 1 > topFirstLayerMaxDia) {
-			topFirstLayerMaxDia = beamObj.topbar.firstLayerList[i].diameter * 1
-		}
-	}
 
-	for (let i = 0; i < beamObj.topbar.secondLayerList.length; i++) {
-		if (beamObj.topbar.secondLayerList.length == 1) {
-			beamObj.topbar.secondLayerList[i].x = beamObj.dimension.width / 2
-		} else if (beamObj.topbar.secondLayerList.length >= 2) {
-			let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.topbar.secondLayerList[0].diameter / 2 - beamObj.topbar.secondLayerList.at(-1).diameter / 2
-			let horizontalBarSpacing = horizontalLength / (beamObj.topbar.secondLayerList.length - 1)
 
-			beamObj.topbar.secondLayerList[i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.topbar.secondLayerList[0].diameter / 2 + horizontalBarSpacing * i
-		}
-
-		beamObj.topbar.secondLayerList[i].y = beamObj.dimension.covering * 1 + topFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.topbar.secondLayerList[i].diameter * 1 / 2
-	}
 
 	let bottomFirstLayerMaxDia = 0
+	let bottombarTotalArea = 0
+	let bottombarSumProductofYandA = 0
 
-	for (let i = 0; i < beamObj.bottombar.firstLayerList.length; i++) {
-		let horizontalBarSpacing = beamObj.dimension.width / (beamObj.bottombar.firstLayerList.length - 1)
+	FS.forEach(layer => {
+		for (let i = 0; i < beamObj.bottombar[layer].length; i++) {
+			// x position calculation
+			if (beamObj.bottombar[layer].length == 1) {
+				beamObj.bottombar[layer][i].x = beamObj.dimension.width / 2
+			} else if (beamObj.bottombar[layer].length >= 2) {
+				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.bottombar[layer][0].diameter / 2 - beamObj.bottombar[layer].at(-1).diameter / 2
+				let horizontalBarSpacing = horizontalLength / (beamObj.bottombar[layer].length - 1)
 
-		beamObj.bottombar.firstLayerList[i].x = horizontalBarSpacing * i
-		beamObj.bottombar.firstLayerList[i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + beamObj.bottombar.firstLayerList[i].diameter * 1 / 2)
-		if (beamObj.bottombar.firstLayerList[i].diameter * 1 > bottomFirstLayerMaxDia) {
-			bottomFirstLayerMaxDia = beamObj.bottombar.firstLayerList[i].diameter * 1
+				beamObj.bottombar[layer][i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.bottombar[layer][0].diameter / 2 + horizontalBarSpacing * i
+			}
+
+
+			// y position calculation
+			if (layer == "firstLayerList" && beamObj.bottombar.firstLayerList[i].diameter * 1 > bottomFirstLayerMaxDia) {
+				bottomFirstLayerMaxDia = beamObj.bottombar[layer][i].diameter * 1
+			}
+			if (layer == "firstLayerList") {
+				beamObj.bottombar[layer][i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + beamObj.stirrup + beamObj.bottombar[layer][i].diameter * 1 / 2)
+			} else if (layer == "secondLayerList") {
+				beamObj.bottombar[layer][i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + beamObj.stirrup + bottomFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.bottombar.secondLayerList[i].diameter * 1 / 2)
+			}
+
+			bottombarTotalArea += Math.PI * beamObj.bottombar[layer][i].diameter ** 2 / 4
+			bottombarSumProductofYandA += beamObj.bottombar[layer][i].y * (Math.PI * beamObj.bottombar[layer][i].diameter ** 2 / 4)
+
 		}
+	})
+	beamObj.bottombar.centroid = bottombarSumProductofYandA / bottombarTotalArea
+	beamObj.bottombar.area = bottombarTotalArea
+
+
+
+
+	if (beamObj.materialStrength.concrete <= 28) {
+		beamObj.materialStrength.β1 = 0.85
+	} else if (beamObj.materialStrength.concrete > 28 && beamObj.materialStrength.concrete < 56) {
+		beamObj.materialStrength.β1 = 0.85 - 0.2 * (beamObj.materialStrength.concrete - 28) / 28
+	} else if (beamObj.materialStrength.concrete >= 56) {
+		beamObj.materialStrength.β1 = 0.65
 	}
 
-	for (let i = 0; i < beamObj.bottombar.secondLayerList.length; i++) {
-		let horizontalBarSpacing = beamObj.dimension.width / (beamObj.bottombar.secondLayerList.length - 1)
+	console.log("[isTopbarYielded, a, c, εt, ø, øMn]")
+	const positiveMomentArray = calculateMoment("positive")
+	console.log(positiveMomentArray)
+	const negativeMomentArray = calculateMoment("negative")
+	console.log(negativeMomentArray)
 
-		beamObj.bottombar.secondLayerList[i].x = horizontalBarSpacing * i
-		beamObj.bottombar.secondLayerList[i].y = beamObj.dimension.height - (beamObj.dimension.covering * 1 + bottomFirstLayerMaxDia + beamObj.dimension.clearDistanceBetweenBarLayer * 1 + beamObj.bottombar.secondLayerList[i].diameter * 1 / 2)
-	}
 
-	// for (let i = 0; i < topBottom.length; i++) {
-	// 	for (let j = 0; j < firstSecond.length; j++) {
-	// 		horizontalBarSpacing = beamObj.dimension.width / (beamObj[topBottom[i]][firstSecond[j]].length - 1)
 
-	// 		beamObj[topBottom[i]][firstSecond[j]].forEach(function (El, index) {
-	// 			beamObj[topBottom[i]][firstSecond[j]][index].x = horizontalBarSpacing * index
-	// 			beamObj[topBottom[i]][firstSecond[j]][index].y = beamObj.dimension.covering * 1 + beamObj[topBottom[i]][firstSecond[j]][index].diameter * 1 / 2
-	// 		})
-	// 	}
-	// }
 	console.log("finished calculating result")
 
 	ResultPrintOutToOutputEl()
 }
 
+function calculateMoment(positiveOrNegative) {
+	let As, d, As_prime, d_prime, dt
+	if (positiveOrNegative == "positive") {
+		As = beamObj.bottombar.area
+		d = beamObj.bottombar.centroid
+
+		const FS = ["firstLayerList", "secondLayerList"]
+		let maxy = 0
+		FS.forEach(layer => {
+			for (let i = 0; i < beamObj.bottombar[layer].length; i++) {
+				if (beamObj.bottombar[layer][i].y > maxy) {
+					maxy = beamObj.bottombar[layer][i].y
+				}
+			}
+		})
+		dt = maxy
+		As_prime = beamObj.topbar.area
+		d_prime = beamObj.topbar.centroid
+	} else if (positiveOrNegative == "negative") {
+		As = beamObj.topbar.area
+		d = beamObj.dimension.height - beamObj.topbar.centroid
+
+		const FS = ["firstLayerList", "secondLayerList"]
+		let miny = beamObj.dimension.height
+		FS.forEach(layer => {
+			for (let i = 0; i < beamObj.topbar[layer].length; i++) {
+				if (beamObj.topbar[layer][i].y < miny) {
+					miny = beamObj.topbar[layer][i].y
+				}
+			}
+		})
+		dt = beamObj.dimension.height - miny
+		As_prime = beamObj.bottombar.area
+		d_prime = beamObj.dimension.height - beamObj.bottombar.centroid
+	}
+
+
+	const ρ = As / (beamObj.dimension.width * d)
+	const ρ_prime = As_prime / (beamObj.dimension.width * d)
+
+	const lastpartofformula = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete / beamObj.materialStrength.steel * d_prime / d * (0.003 / (0.003 - beamObj.materialStrength.steel / (2 * 10 ** 5))) + ρ_prime
+	const isTopbarYielded = ρ > lastpartofformula
+
+
+
+	let a, Mn, c, εt, ø, øMn
+	if (isTopbarYielded) {
+		a = (ρ - ρ_prime) * beamObj.materialStrength.steel * d / (0.85 * beamObj.materialStrength.concrete)
+		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * beamObj.materialStrength.steel * (d - d_prime) / 1000 / 1000
+		c = a / beamObj.materialStrength.β1
+
+	} else {
+		let firstCoeff, secondCoeff, thirdCoeff
+
+		firstCoeff = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete * beamObj.dimension.width
+		secondCoeff = As_prime * 0.003 * 2 * 10 ** 5 - As * beamObj.materialStrength.steel
+		thirdCoeff = -As_prime * 0.003 * 2 * 10 ** 5 * d_prime
+
+		// = IF(A20 = FALSE, (-M23 + SQRT(M23 ^ 2 - 4 * M22 * M24)) / (2 * M22), 0)
+		c = (-secondCoeff + Math.sqrt(secondCoeff ** 2 - 4 * firstCoeff * thirdCoeff)) / (2 * firstCoeff)
+		a = beamObj.materialStrength.β1 * c
+		// =0.85*f.c*a/1000*b/1000*(d-a/2)+As.*2*10^5*(0.003/c*(c-d.))*(d-d.)/1000/1000
+		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * 2 * 10 ** 5 * (0.003 / c * (c - d_prime)) * (d - d_prime) / 1000 / 1000
+
+	}
+
+
+
+	εt = 0.003 / c * (dt - c)
+	if (εt > 0.005) {
+		ø = 0.9
+	}
+	else if (εt > 0.002 && εt < 0.005) {
+		ø = 0.65 + (εt - 0.002) / 0.003 * 0.25
+	}
+	else if (εt < 0.002) {
+		ø = 0.65
+	}
+	øMn = ø * Mn
+
+	// return [ρ, ρ_prime, lastpartofformula, isTopbarYielded, a, Mn, c, εt, ø, øMn]
+	return [isTopbarYielded, a, c, εt, ø, øMn]
+}
+
 function ResultPrintOutToOutputEl() {
 	document.querySelectorAll(".outputBox").forEach(EL => {
-		EL.innerHTML = retrive(beamObj, EL.getAttribute("data-storepath").split('β'))
+		EL.innerHTML = retrive(beamObj, EL.getAttribute("data-storepath").split('ю'))
 	})
 }
 
@@ -223,9 +344,9 @@ function assign(returnObj, storepath, value, command) {
 				if (returnObj[deepestPathName].length != 0) {
 					returnObj[deepestPathName].push({ diameter: returnObj[deepestPathName][returnObj[deepestPathName].length - 1].diameter })
 				} else {
-					// console.log(unreplacedstorepath.join("β"))
-					if (document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("β")}']`)[0].value * 1 > 0) {
-						returnObj[deepestPathName].push({ diameter: document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("β")}']`)[0].value * 1 })
+					// console.log(unreplacedstorepath.join("ю"))
+					if (document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}']`)[0].value * 1 > 0) {
+						returnObj[deepestPathName].push({ diameter: document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}']`)[0].value * 1 })
 					} else {
 						returnObj[deepestPathName].push({ diameter: 20, x: "", y: "" })
 					}
@@ -280,7 +401,7 @@ function retrive(returnObj, storepath, command) {
 
 
 		} else if (command == "changeArrayLength") {
-			return returnObj[deepestPathName].length
+			return returnObj[deepestPathName].length.toString() + "bars"
 		}
 		console.log(beamObj)
 	}
@@ -309,14 +430,14 @@ function redrawSVGRect() {
 	outer_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2)
 	outer_stirrup_rect.setAttribute("x", beamObj.dimension.covering)
 	outer_stirrup_rect.setAttribute("y", beamObj.dimension.covering)
-	outer_stirrup_rect.setAttribute("rx", 15)
+	outer_stirrup_rect.setAttribute("rx", 17)
 
 	const inner_stirrup_rect = svg.querySelector(".inner-stirrup-rect")
 	inner_stirrup_rect.setAttribute("width", beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
 	inner_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
 	inner_stirrup_rect.setAttribute("x", beamObj.dimension.covering + beamObj.stirrup)
 	inner_stirrup_rect.setAttribute("y", beamObj.dimension.covering + beamObj.stirrup)
-	inner_stirrup_rect.setAttribute("rx", 10)
+	inner_stirrup_rect.setAttribute("rx", 8)
 }
 function redrawSVGbar() {
 	console.log("start drawing SVG")
@@ -332,7 +453,7 @@ function redrawSVGbar() {
 			let string = ""
 			for (let index = 0; index < beamObj[TB[i]][FS[j]].length; index++) {
 				string += `<circle class='' cx='${beamObj[TB[i]][FS[j]][index].x * 1}' cy='${beamObj[TB[i]][FS[j]][index].y * 1}' r='${beamObj[TB[i]][FS[j]][index].diameter * 1 / 2}'
-						data-storepath='${TB[i]}β^${FS[j]}β${index}βdiameter' />`
+						data-storepath='${TB[i]}ю^${FS[j]}ю${index}юdiameter' />`
 			}
 			svgBarLayerGroup.innerHTML = string
 
@@ -340,7 +461,7 @@ function redrawSVGbar() {
 
 			svgBarLayerGroup.querySelectorAll(`.section-svg g.${TB[i]}.${FS[j]} circle`).forEach(circleEl => {
 				circleEl.addEventListener("click", function (e) {
-					const storepath = circleEl.getAttribute("data-storepath").split("β")
+					const storepath = circleEl.getAttribute("data-storepath").split("ю")
 
 					let newDiameter = prompt("Please enter new diameter", retrive(beamObj, storepath));
 					if (newDiameter != null) {
