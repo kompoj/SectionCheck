@@ -58,7 +58,7 @@
 		padding: 0.6rem;
 		border: 1px solid #555;
 		border-radius: 5px;
-		font-size: 1.6rem;
+		font-size: 1.5rem;
 		background-color: #e1f1ff;
 	}
 
@@ -77,7 +77,7 @@
 		color: #aaa;
 		border-radius: 1px;
 		padding: 4px;
-		font-size: 1.6rem;
+		font-size: 1.5rem;
 		background-color: #fffec5;
 	}
 
@@ -88,7 +88,7 @@
 	.grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		max-width: 60rem;
+		max-width: 65rem;
 		margin: 3rem auto;
 		column-gap: 15%;
 		row-gap: 1rem;
@@ -113,7 +113,7 @@
 	}
 
 	label {
-		font-size: 1.6rem
+		font-size: 1.5rem
 	}
 </style>
 
@@ -137,13 +137,13 @@
 
 
 	<div class="grid">
-		<h3 data-language='dimensionβขนาด'>dimension</h3>
+		<h3 data-language='dimensionюขนาด'>dimension</h3>
 
 		<div class="eachInput">
-			<label data-language='heightβความสูง'>height:</label>
+			<label data-language='heightюความสูง'>height:</label>
 			<div>
 
-				<input id="height" class="inputBox" type="number" placeholder="height" data-storepath='dimensionβheight'
+				<input id="height" class="inputBox" type="number" placeholder="height" data-storepath='dimensionюheight'
 					min="0" step="10">
 
 				<label>mm</label>
@@ -151,28 +151,28 @@
 		</div>
 
 		<div class="eachInput">
-			<label data-language='widthβความกว้าง'>width:</label>
+			<label data-language='widthюความกว้าง'>width:</label>
 			<div>
-				<input id="width" class="inputBox" type="number" placeholder="width" data-storepath='dimensionβwidth'
+				<input id="width" class="inputBox" type="number" placeholder="width" data-storepath='dimensionюwidth'
 					min="0" step="10">
 				<label>mm</label>
 			</div>
 		</div>
 
 		<div class="eachInput">
-			<label data-language='coveringβระยะหุ้ม'>covering:</label>
+			<label data-language='coveringюระยะหุ้ม'>covering:</label>
 			<div>
 				<input id="covering" class="inputBox" type="number" placeholder="covering"
-					data-storepath='dimensionβcovering' min="0" step="5">
+					data-storepath='dimensionюcovering' min="0" step="5">
 				<label>mm</label>
 			</div>
 		</div>
 
 		<div class="eachInput">
-			<label data-language='clear distance between bar layerβระยะ'>clear distance between bar layer:</label>
+			<label data-language='clear distance between bar layerюระยะ'>clear distance between bar layer:</label>
 			<div>
 				<input id="covering" class="inputBox" type="number" placeholder="clear distance"
-					data-storepath='dimensionβclearDistanceBetweenBarLayer' min="0" step="5">
+					data-storepath='dimensionюclearDistanceBetweenBarLayer' min="0" step="5">
 				<label>mm</label>
 			</div>
 		</div>
@@ -182,17 +182,17 @@
 	<div class="grid">
 		<h3>topbarFirstLayer</h3>
 		<div class="eachInput">
-			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
+			<label data-language='diameterюเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
-				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
-					data-command="changeBarDiameter" min="0" max="40">
+				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarю^firstLayerList'
+					data-command="changeBarDiameter" min="0" max="40" placeholder="dia.">
 				<label>mm</label>
 			</div>
 		</div>
-		<div class="eachInput">
-			<label data-language='quantityβจำนวน'>quantity:</label>
+		<div class=" eachInput">
+			<label data-language='quantityюจำนวน'>quantity:</label>
 			<div>
-				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^firstLayerList'
+				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarю^firstLayerList'
 					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
@@ -200,17 +200,17 @@
 
 		<h3>topbarSecondLayer</h3>
 		<div class="eachInput">
-			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
+			<label data-language='diameterюเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
-				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
-					data-command="changeBarDiameter" min="0" max="40">
+				<input id="topbarDiameter" class="inputBox" type="number" data-storepath='topbarю^secondLayerList'
+					data-command="changeBarDiameter" min="0" max="40" placeholder="dia.">
 				<label>mm</label>
 			</div>
 		</div>
 		<div class="eachInput">
-			<label data-language='quantityβจำนวน'>quantity:</label>
+			<label data-language='quantityюจำนวน'>quantity:</label>
 			<div>
-				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarβ^secondLayerList'
+				<input id="topbarNumber" class="inputBox" type="number" data-storepath='topbarю^secondLayerList'
 					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
@@ -219,17 +219,17 @@
 
 		<h3>bottombarSecondLayer</h3>
 		<div class="eachInput">
-			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
+			<label data-language='diameterюเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
-				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
-					data-command="changeBarDiameter" min="0" max="40">
+				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarю^secondLayerList'
+					data-command="changeBarDiameter" min="0" max="40" placeholder="dia.">
 				<label>mm</label>
 			</div>
 		</div>
 		<div class="eachInput">
-			<label data-language='quantityβจำนวน'>quantity:</label>
+			<label data-language='quantityюจำนวน'>quantity:</label>
 			<div>
-				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^secondLayerList'
+				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarю^secondLayerList'
 					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
@@ -237,25 +237,62 @@
 
 		<h3>bottombarFirstLayer</h3>
 		<div class="eachInput">
-			<label data-language='diameterβเส้นผ่านศูนย์กลาง'>diameter:</label>
+			<label data-language='diameterюเส้นผ่านศูนย์กลาง'>diameter:</label>
 			<div>
-				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
-					data-command="changeBarDiameter" min="0" max="40">
+				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='bottombarю^firstLayerList'
+					data-command="changeBarDiameter" min="0" max="40" placeholder="dia.">
 				<label>mm</label>
 			</div>
 		</div>
 		<div class="eachInput">
-			<label data-language='quantityβจำนวน'>quantity:</label>
+			<label data-language='quantityюจำนวน'>quantity:</label>
 			<div>
-				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarβ^firstLayerList'
+				<input id="bottombarNumber" class="inputBox" type="number" data-storepath='bottombarю^firstLayerList'
 					data-command="changeArrayLength" min="0" max="20">
 				<label></label>
 			</div>
 		</div>
+
+		<h3>stirrup</h3>
+		<div class="eachInput">
+			<label data-language='diameterюเส้นผ่านศูนย์กลาง'>diameter:</label>
+			<div>
+				<input id="bottombarDiameter" class="inputBox" type="number" data-storepath='stirrup'
+					data-command="changeBarDiameter" min="0" max="40" placeholder="dia.">
+				<label>mm</label>
+			</div>
+		</div>
 	</div>
 
-	<div class="outputBox" id="area" data-storepath='dimensionβarea'></div>
-	<div class="outputBox" id="parameter" data-storepath='dimensionβparameter'></div>
+	<div class="grid">
+		<h3>material properties</h3>
+		<div class="eachInput">
+			<label data-language='concrete strengthюกำลัง'>concrete strength:</label>
+			<div>
+				<input class="inputBox" type="number" data-storepath='materialStrengthюconcrete' min="0" placeholder="f'c">
+				<label>MPa</label>
+			</div>
+		</div>
+		<div class="eachInput">
+			<label data-language='steel bar strengthюกำลัง'>steel bar strength:</label>
+			<div>
+				<input class="inputBox" type="number" data-storepath='materialStrengthюsteel' min="0" placeholder="fy">
+				<label>MPa</label>
+			</div>
+		</div>
+		<div class="eachInput">
+			<label data-language='stirrup strengthюกำลัง'>stirrup strength:</label>
+			<div>
+				<input class="inputBox" type="number" data-storepath='materialStrengthюstirrup' min="0"
+					placeholder="strength">
+				<label>MPa</label>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="outputBox" id="area" data-storepath='dimensionюarea'></div>
+	<div class="outputBox" id="parameter" data-storepath='dimensionюparameter'></div>
 
 
 
