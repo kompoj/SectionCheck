@@ -1,17 +1,17 @@
 const beamObj = {
 	dimension: {
-		height: 500,
-		width: 250,
+		height: 400,
+		width: 200,
 		covering: 30,
 		clearDistanceBetweenBarLayer: 20
 	},
 	topbar: {
-		firstLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+		firstLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
 		secondLayerList: [],
 	},
 	bottombar: {
-		firstLayerList: [{ diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }, { diameter: 25, x: "", y: "" }],
-		secondLayerList: [{ diameter: 16, x: "", y: "" }, { diameter: 16, x: "", y: "" }],
+		firstLayerList: [{ diameter: 20, x: "", y: "" }, { diameter: 20, x: "", y: "" }],
+		secondLayerList: [],
 	},
 	stirrup: 9,
 	materialStrength: {
@@ -19,9 +19,49 @@ const beamObj = {
 		steel: 400,
 		stirrup: 240
 	},
+	positive: {
+		As: null,
+		d: null,
+		dt: null,
+		As_prime: null,
+		d_prime: null,
+		ρ: null,
+		ρ_prime: null,
+		isTopbarYielded: null,
+		a: null,
+		c: null,
+		εt: null,
+		ø: null,
+		Mn: null,
+		øMn: null,
+	},
+	negative: {
+		As: null,
+		d: null,
+		dt: null,
+		As_prime: null,
+		d_prime: null,
+		ρ: null,
+		ρ_prime: null,
+		isTopbarYielded: null,
+		a: null,
+		c: null,
+		εt: null,
+		ø: null,
+		Mn: null,
+		øMn: null,
+	}
 
 
 }
+
+
+
+
+
+
+
+
 
 document.querySelector("#change-language").addEventListener("click", function () {
 	const lang = document.querySelector("html").getAttribute("lang")
@@ -143,7 +183,11 @@ function calculateAndUpdateResult() {
 
 		}
 	})
-	beamObj.topbar.centroid = topbarSumProductofYandA / topbarTotalArea
+	if (topbarTotalArea != 0) {
+		beamObj.topbar.centroid = topbarSumProductofYandA / topbarTotalArea
+	} else {
+		beamObj.topbar.centroid = null
+	}
 	beamObj.topbar.area = topbarTotalArea
 
 
@@ -182,7 +226,11 @@ function calculateAndUpdateResult() {
 
 		}
 	})
-	beamObj.bottombar.centroid = bottombarSumProductofYandA / bottombarTotalArea
+	if (bottombarTotalArea != 0) {
+		beamObj.bottombar.centroid = bottombarSumProductofYandA / bottombarTotalArea
+	} else {
+		beamObj.bottombar.centroid = null
+	}
 	beamObj.bottombar.area = bottombarTotalArea
 
 
@@ -196,11 +244,11 @@ function calculateAndUpdateResult() {
 		beamObj.materialStrength.β1 = 0.65
 	}
 
-	console.log("[isTopbarYielded, a, c, εt, ø, øMn]")
-	const positiveMomentArray = calculateMoment("positive")
-	console.log(positiveMomentArray)
-	const negativeMomentArray = calculateMoment("negative")
-	console.log(negativeMomentArray)
+	// console.log("[isTopbarYielded, a, c, εt, ø, øMn]")
+	calculateMoment("positive")
+	// console.log(positiveMomentArray)
+	calculateMoment("negative")
+	// console.log(negativeMomentArray)
 
 
 
@@ -210,7 +258,7 @@ function calculateAndUpdateResult() {
 }
 
 function calculateMoment(positiveOrNegative) {
-	let As, d, As_prime, d_prime, dt
+	let As, d, dt, As_prime, d_prime = null
 	if (positiveOrNegative == "positive") {
 		As = beamObj.bottombar.area
 		d = beamObj.bottombar.centroid
@@ -227,6 +275,7 @@ function calculateMoment(positiveOrNegative) {
 		dt = maxy
 		As_prime = beamObj.topbar.area
 		d_prime = beamObj.topbar.centroid
+
 	} else if (positiveOrNegative == "negative") {
 		As = beamObj.topbar.area
 		d = beamObj.dimension.height - beamObj.topbar.centroid
@@ -245,9 +294,9 @@ function calculateMoment(positiveOrNegative) {
 		d_prime = beamObj.dimension.height - beamObj.bottombar.centroid
 	}
 
-
-	const ρ = As / (beamObj.dimension.width * d)
-	const ρ_prime = As_prime / (beamObj.dimension.width * d)
+	let ρ, ρ_prime = null
+	ρ = As / (beamObj.dimension.width * d)
+	ρ_prime = As_prime / (beamObj.dimension.width * d)
 
 	const lastpartofformula = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete / beamObj.materialStrength.steel * d_prime / d * (0.003 / (0.003 - beamObj.materialStrength.steel / (2 * 10 ** 5))) + ρ_prime
 	const isTopbarYielded = ρ > lastpartofformula
@@ -255,10 +304,12 @@ function calculateMoment(positiveOrNegative) {
 
 
 	let a, Mn, c, εt, ø, øMn
-	if (isTopbarYielded) {
+	if (isTopbarYielded || As_prime == 0) {
 		a = (ρ - ρ_prime) * beamObj.materialStrength.steel * d / (0.85 * beamObj.materialStrength.concrete)
 		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * beamObj.materialStrength.steel * (d - d_prime) / 1000 / 1000
 		c = a / beamObj.materialStrength.β1
+
+
 
 	} else {
 		let firstCoeff, secondCoeff, thirdCoeff
@@ -289,8 +340,30 @@ function calculateMoment(positiveOrNegative) {
 	}
 	øMn = ø * Mn
 
+
+
+	beamObj[positiveOrNegative].As = As
+	beamObj[positiveOrNegative].d = d
+	beamObj[positiveOrNegative].dt = dt
+	beamObj[positiveOrNegative].As_prime = As_prime
+	beamObj[positiveOrNegative].d_prime = d_prime
+	beamObj[positiveOrNegative].ρ = ρ
+	beamObj[positiveOrNegative].ρ_prime = ρ_prime
+	beamObj[positiveOrNegative].isTopbarYielded = isTopbarYielded
+	beamObj[positiveOrNegative].a = a
+	beamObj[positiveOrNegative].c = c
+	beamObj[positiveOrNegative].εt = εt
+	beamObj[positiveOrNegative].ø = ø
+	beamObj[positiveOrNegative].Mn = Mn
+	beamObj[positiveOrNegative].øMn = øMn
+
+	let k
+	k = Math.sqrt((9 * ρ) ** 2 + 2 * ρ * 9) - 9 * ρ
+	console.log(k * d, "k ver1")
+	k = (Math.sqrt((9 * ρ) ** 2 + 4 * 0.63875 * 9 * ρ) - 9 * ρ) / (2 * 0.63875)
+	console.log(k * d, "k ver2")
 	// return [ρ, ρ_prime, lastpartofformula, isTopbarYielded, a, Mn, c, εt, ø, øMn]
-	return [isTopbarYielded, a, c, εt, ø, øMn]
+	// return [isTopbarYielded, a, c, εt, ø, øMn]
 }
 
 function ResultPrintOutToOutputEl() {
@@ -298,6 +371,195 @@ function ResultPrintOutToOutputEl() {
 		EL.innerHTML = retrive(beamObj, EL.getAttribute("data-storepath").split('ю'))
 	})
 }
+
+
+
+
+
+function redrawSVG() {
+	redrawSVGRect()
+	redrawSVGbar()
+	redrawPositiveStrainDiagram()
+}
+
+function redrawSVGRect() {
+	const svg = document.querySelector(".section-svg")
+	const strokeWidth = 3
+	// const strokeWidth = Math.max(beamObj.dimension.height, beamObj.dimension.width) / 100
+	svg.setAttribute("viewBox", `${-strokeWidth / 2} ${-strokeWidth / 2} ${beamObj.dimension.width + strokeWidth} ${beamObj.dimension.height + strokeWidth}`);
+
+	const parameter_rect = svg.querySelector(".parameter-rect")
+	parameter_rect.setAttribute("width", beamObj.dimension.width)
+	parameter_rect.setAttribute("height", beamObj.dimension.height)
+	parameter_rect.setAttribute("stroke-width", strokeWidth)
+	parameter_rect.setAttribute("rx", 5)
+
+	const outer_stirrup_rect = svg.querySelector(".outer-stirrup-rect")
+	outer_stirrup_rect.setAttribute("width", beamObj.dimension.width - beamObj.dimension.covering * 2)
+	outer_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2)
+	outer_stirrup_rect.setAttribute("x", beamObj.dimension.covering)
+	outer_stirrup_rect.setAttribute("y", beamObj.dimension.covering)
+	outer_stirrup_rect.setAttribute("rx", 17)
+
+	const inner_stirrup_rect = svg.querySelector(".inner-stirrup-rect")
+	inner_stirrup_rect.setAttribute("width", beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
+	inner_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
+	inner_stirrup_rect.setAttribute("x", beamObj.dimension.covering + beamObj.stirrup)
+	inner_stirrup_rect.setAttribute("y", beamObj.dimension.covering + beamObj.stirrup)
+	inner_stirrup_rect.setAttribute("rx", 8)
+}
+function redrawSVGbar() {
+	console.log("start drawing SVG")
+
+	const TB = ["topbar", "bottombar"]
+	const FS = ["firstLayerList", "secondLayerList"]
+
+	for (let i = 0; i < TB.length; i++) {
+		for (let j = 0; j < FS.length; j++) {
+			const svgBarLayerGroup = document.querySelector(`.section-svg g.${TB[i]}.${FS[j]}`)
+
+			// console.log(beamObj[TB[i]][FS[j]])
+			let string = ""
+			for (let index = 0; index < beamObj[TB[i]][FS[j]].length; index++) {
+				string += `<circle class='' cx='${beamObj[TB[i]][FS[j]][index].x * 1}' cy='${beamObj[TB[i]][FS[j]][index].y * 1}' r='${beamObj[TB[i]][FS[j]][index].diameter * 1 / 2}'
+						data-storepath='${TB[i]}ю^${FS[j]}ю${index}юdiameter' />`
+			}
+			svgBarLayerGroup.innerHTML = string
+
+
+
+			svgBarLayerGroup.querySelectorAll(`.section-svg g.${TB[i]}.${FS[j]} circle`).forEach(circleEl => {
+				circleEl.addEventListener("click", function (e) {
+					const storepath = circleEl.getAttribute("data-storepath").split("ю")
+
+					let newDiameter = prompt("Please enter new diameter", retrive(beamObj, storepath));
+					if (newDiameter != null) {
+						assign(beamObj, storepath, newDiameter * 1)
+						retriveAllDataFromDatabaseToInputEl()
+						calculateAndUpdateResult()
+						redrawSVG()
+					}
+
+				})
+
+				circleEl.addEventListener("mouseover", function (e) {
+					console.log("mouseover")
+				})
+
+			})
+		}
+	}
+
+}
+
+function redrawPositiveStrainDiagram() {
+
+	const trace1 = {
+		x: [],
+		y: [],
+		type: 'scatter',
+		mode: 'lines+text',
+		text: [],
+		textposition: 'bottomright',
+		textfont: {
+			size: 10,
+		},
+		line: {
+			color: 'rgb(0, 0, 0)',
+			width: 1
+		}
+	};
+
+	if (beamObj.positive.εt != NaN && beamObj.positive.c != NaN && beamObj.positive.dt != NaN && beamObj.positive.dt != 0) {
+		trace1.x = [0, 0.003, 0, -beamObj.positive.εt, 0, 0]
+		trace1.y = [0, 0, beamObj.positive.c, beamObj.positive.dt, beamObj.positive.dt, 0]
+		trace1.text = ["ε=0.003", "", `c=${beamObj.positive.c}mm`, `ε=${Math.round(beamObj.positive.εt * 10000) / 10000}`, "", ""]
+	} else {
+		trace1.x = []
+		trace1.y = []
+		trace1.text = []
+	}
+
+	const trace2 = {
+		x: [-0.002, -0.005],
+		y: [500 - 2, 500 - 2],
+		type: 'scatter',
+		mode: 'lines+text',
+		line: {
+			color: 'rgb(255, 136, 0)',
+			width: 2
+		},
+		text: ["0.002", "0.005"],
+		textposition: 'topright',
+		textfont: {
+			size: 8,
+		},
+	};
+	trace2.y = JSON.parse(`[${beamObj.dimension.height - 2},${beamObj.dimension.height - 2}]`)
+
+	const trace3 = {
+		x: [-0.005, -0.012],
+		y: [500 - 2, 500 - 2],
+		type: 'scatter',
+		mode: 'lines+text',
+		line: {
+			color: 'rgb(20, 200, 80)',
+			width: 2
+		},
+		text: ["", "0.012"],
+		textposition: 'topright',
+		textfont: {
+			size: 8,
+		},
+	};
+	trace3.y = JSON.parse(`[${beamObj.dimension.height - 2},${beamObj.dimension.height - 2}]`)
+
+	const data = [trace1, trace2, trace3];
+	// const data = [trace1];
+
+	const layout = {
+		// title: 'Create a Static Chart',
+		showlegend: false,
+		margin: {
+			t: 0,
+			b: 0,
+			l: 0,
+			r: 0,
+			pad: 0
+		},
+		xaxis: {
+			// range: 
+			visible: false,
+			showgrid: false,
+		},
+		yaxis: {
+			range: [],
+			// autorange: "reversed"
+			visible: false,
+			showgrid: false,
+		},
+		paper_bgcolor: 'rgba(0,0,0,0)',
+		plot_bgcolor: 'rgba(0,0,0,0)'
+	};
+	layout.yaxis.range = [beamObj.dimension.height, 0]
+
+
+	Plotly.newPlot('myDiv1', data, layout, {
+		displayModeBar: false,
+		staticPlot: true
+	});
+	// Plotly.newPlot('myDiv2', data, layout, {
+	// 	displayModeBar: false,
+	// 	staticPlot: true
+	// });
+}
+
+
+
+
+
+
+
 
 
 
@@ -406,90 +668,3 @@ function retrive(returnObj, storepath, command) {
 		console.log(beamObj)
 	}
 }
-
-
-function redrawSVG() {
-	redrawSVGRect()
-	redrawSVGbar()
-}
-
-function redrawSVGRect() {
-	const svg = document.querySelector(".section-svg")
-	const strokeWidth = 3
-	// const strokeWidth = Math.max(beamObj.dimension.height, beamObj.dimension.width) / 100
-	svg.setAttribute("viewBox", `${-strokeWidth / 2} ${-strokeWidth / 2} ${beamObj.dimension.width + strokeWidth} ${beamObj.dimension.height + strokeWidth}`);
-
-	const parameter_rect = svg.querySelector(".parameter-rect")
-	parameter_rect.setAttribute("width", beamObj.dimension.width)
-	parameter_rect.setAttribute("height", beamObj.dimension.height)
-	parameter_rect.setAttribute("stroke-width", strokeWidth)
-	parameter_rect.setAttribute("rx", 5)
-
-	const outer_stirrup_rect = svg.querySelector(".outer-stirrup-rect")
-	outer_stirrup_rect.setAttribute("width", beamObj.dimension.width - beamObj.dimension.covering * 2)
-	outer_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2)
-	outer_stirrup_rect.setAttribute("x", beamObj.dimension.covering)
-	outer_stirrup_rect.setAttribute("y", beamObj.dimension.covering)
-	outer_stirrup_rect.setAttribute("rx", 17)
-
-	const inner_stirrup_rect = svg.querySelector(".inner-stirrup-rect")
-	inner_stirrup_rect.setAttribute("width", beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
-	inner_stirrup_rect.setAttribute("height", beamObj.dimension.height - beamObj.dimension.covering * 2 - beamObj.stirrup * 2)
-	inner_stirrup_rect.setAttribute("x", beamObj.dimension.covering + beamObj.stirrup)
-	inner_stirrup_rect.setAttribute("y", beamObj.dimension.covering + beamObj.stirrup)
-	inner_stirrup_rect.setAttribute("rx", 8)
-}
-function redrawSVGbar() {
-	console.log("start drawing SVG")
-
-	const TB = ["topbar", "bottombar"]
-	const FS = ["firstLayerList", "secondLayerList"]
-
-	for (let i = 0; i < TB.length; i++) {
-		for (let j = 0; j < FS.length; j++) {
-			const svgBarLayerGroup = document.querySelector(`.section-svg g.${TB[i]}.${FS[j]}`)
-
-			// console.log(beamObj[TB[i]][FS[j]])
-			let string = ""
-			for (let index = 0; index < beamObj[TB[i]][FS[j]].length; index++) {
-				string += `<circle class='' cx='${beamObj[TB[i]][FS[j]][index].x * 1}' cy='${beamObj[TB[i]][FS[j]][index].y * 1}' r='${beamObj[TB[i]][FS[j]][index].diameter * 1 / 2}'
-						data-storepath='${TB[i]}ю^${FS[j]}ю${index}юdiameter' />`
-			}
-			svgBarLayerGroup.innerHTML = string
-
-
-
-			svgBarLayerGroup.querySelectorAll(`.section-svg g.${TB[i]}.${FS[j]} circle`).forEach(circleEl => {
-				circleEl.addEventListener("click", function (e) {
-					const storepath = circleEl.getAttribute("data-storepath").split("ю")
-
-					let newDiameter = prompt("Please enter new diameter", retrive(beamObj, storepath));
-					if (newDiameter != null) {
-						assign(beamObj, storepath, newDiameter * 1)
-						retriveAllDataFromDatabaseToInputEl()
-						calculateAndUpdateResult()
-						redrawSVG()
-					}
-
-				})
-
-				circleEl.addEventListener("mouseover", function (e) {
-					console.log("mouseover")
-				})
-
-			})
-		}
-	}
-
-}
-
-
-
-
-
-
-
-
-
-
-
