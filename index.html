@@ -15,6 +15,8 @@
 	<script defer src="./beamObj/beamObj.js"></script>
 	<script defer src="./beamObj/redrawSVG.js"></script>
 
+	<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+
 </head>
 
 <style>
@@ -121,6 +123,7 @@
 	<button id="change-language">change langauge</button>
 	<button id="calculateAndUpdateResult">calculateAndUpdateResult</button>
 	<button id="redrawSVG">redrawSVG</button>
+	<!-- <br> -->
 
 	<svg class="section-svg" width="200" height="200" viewBox="0 0 0 0">
 		<rect class="parameter-rect" x="0" y="0" width="30" height="30" stroke="black" fill="transparent"
@@ -135,6 +138,8 @@
 		<g class="bottombar firstLayerList"></g>
 	</svg>
 
+	<div id="myDiv1" style="width:150px; height:200px; display: inline-block;"></div>
+	<div id="myDiv2" style="width:150px; height:200px; display: inline-block;"></div>
 
 	<div class="grid">
 		<h3 data-language='dimensionюขนาด'>dimension</h3>
@@ -276,14 +281,15 @@
 		<div class="eachInput">
 			<label data-language='steel bar strengthюกำลัง'>steel bar strength:</label>
 			<div>
-				<input class="inputBox" type="number" data-storepath='materialStrengthюsteel' min="0" placeholder="fy">
+				<input class="inputBox" type="number" data-storepath='materialStrengthюsteel' min="0" step="10"
+					placeholder="fy">
 				<label>MPa</label>
 			</div>
 		</div>
 		<div class="eachInput">
 			<label data-language='stirrup strengthюกำลัง'>stirrup strength:</label>
 			<div>
-				<input class="inputBox" type="number" data-storepath='materialStrengthюstirrup' min="0"
+				<input class="inputBox" type="number" data-storepath='materialStrengthюstirrup' min="0" step="10"
 					placeholder="strength">
 				<label>MPa</label>
 			</div>
