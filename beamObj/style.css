@@ -1,0 +1,169 @@
+﻿	* {
+		font-family: 'Sarabun', sans-serif;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		font-size: 62.5%;
+	}
+
+	body {
+		background: url(../bgnoise.png)
+	}
+
+	.section-svg circle:hover {
+		fill: #336683;
+	}
+
+	/* .section-svg circle::before,
+	div.grid::before {
+		content: "Best value";
+
+
+		text-transform: uppercase;
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: #333;
+		background-color: #ffd43b;
+		padding: 0.8rem 8rem;
+	} */
+
+	.inputBox {
+		width: 7.5rem;
+		color: #aaa;
+		/* margin-left: 1rem; */
+		margin-right: 0.5rem;
+		padding: 0.6rem;
+		border: 1px solid #555;
+		border-radius: 5px;
+		font-size: 1.5rem;
+		background-color: #e1f1ff;
+	}
+
+	.inputBox:focus,
+	.inputBox:active {
+		background-color: #acd3ff;
+		/* border: 12px solid #555; */
+	}
+
+	.inputBox.modified {
+		color: black
+	}
+
+
+
+	.input-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+
+		column-gap: 15%;
+		row-gap: 1rem;
+		justify-content: start;
+		align-items: center;
+	}
+
+	.input-grid h3 {
+		grid-column: 1/-1;
+		font-size: 1.5rem;
+		font-weight: 500;
+	}
+
+	.eachInput {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		/* display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 1rem */
+	}
+
+	label {
+		font-size: 1.5rem
+	}
+
+
+	.accordion {
+		max-width: 85rem;
+		margin: 3rem auto;
+	}
+
+	.accordion-header {
+		font-size: 1.6rem;
+		cursor: pointer;
+		display: inline-block;
+		user-select: none
+	}
+
+	.accordion-header:hover {
+		color: #5477a0
+	}
+
+	.accordion-header::before {
+		content: "▼";
+		display: inline-block;
+		transition: transform 0.2s
+	}
+
+	.accordion.collapsed>.accordion-header::before {
+		/* content: "▶" */
+		/* display: inline-block; */
+		transform: rotate(-90deg)
+	}
+
+	/* .accordion-content {
+		max-height: 70rem;
+		transition: max-height 0.5s
+	} */
+
+	.accordion.collapsed>.accordion-content {
+		max-height: 0;
+		overflow: hidden
+	}
+
+	.input-output-grid {
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		align-items: start;
+		column-gap: 10%;
+	}
+
+	.output-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+
+		column-gap: 15%;
+		row-gap: 1rem;
+		align-items: start;
+	}
+
+	.eachOutput {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: center;
+
+		/* display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 1rem */
+	}
+
+	.outputBox {
+		display: inline-block;
+		width: 8rem;
+		color: #aaa;
+		border-radius: 1px;
+		padding: 4px;
+		font-size: 1.5rem;
+		background-color: #fffec5;
+	}
+
+	.outputBox.modified {
+		color: black
+	}
+
+	.accordion-content-inner {
+		margin-left: 1.6rem
+	}

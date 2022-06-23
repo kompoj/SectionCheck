@@ -20,36 +20,48 @@ const beamObj = {
 		stirrup: 240
 	},
 	positive: {
-		As: null,
-		d: null,
-		dt: null,
-		As_prime: null,
-		d_prime: null,
-		ρ: null,
-		ρ_prime: null,
-		isTopbarYielded: null,
-		a: null,
-		c: null,
-		εt: null,
-		ø: null,
-		Mn: null,
-		øMn: null,
+		// As: null,
+		// d: null,
+		// dt: null,
+		// As_prime: null,
+		// d_prime: null,
+		// ρ: null,
+		// ρ_prime: null,
+		// isTopbarYielded: null,
+		// a: null,
+		// c: null,
+		// εt: null,
+		// εs_prime: null,
+		// is_εs_prime_yielded: null,
+		// ø: null,
+		// Mn: null,
+		// øMn: null,
+		// Cc: null,
+		// Cs_prime: null,
+		// Cs: null,
+		// is_C_equal_T: null,
 	},
 	negative: {
-		As: null,
-		d: null,
-		dt: null,
-		As_prime: null,
-		d_prime: null,
-		ρ: null,
-		ρ_prime: null,
-		isTopbarYielded: null,
-		a: null,
-		c: null,
-		εt: null,
-		ø: null,
-		Mn: null,
-		øMn: null,
+		// As: null,
+		// d: null,
+		// dt: null,
+		// As_prime: null,
+		// d_prime: null,
+		// ρ: null,
+		// ρ_prime: null,
+		// isTopbarYielded: null,
+		// a: null,
+		// c: null,
+		// εt: null,
+		// εs_prime: null,
+		// is_εs_prime_yielded: null,
+		// ø: null,
+		// Mn: null,
+		// øMn: null,
+		// Cc: null,
+		// Cs_prime: null,
+		// Cs: null,
+		// is_C_equal_T: null,
 	}
 
 
@@ -59,7 +71,11 @@ const beamObj = {
 
 
 
-
+document.querySelectorAll(".accordion").forEach(El => {
+	El.querySelector(".accordion-header").addEventListener("click", () => {
+		El.classList.toggle("collapsed")
+	})
+})
 
 
 
@@ -96,29 +112,9 @@ function inititialize() {
 }
 
 
-function retriveAllDataFromDatabaseToInputEl() {
-	document.querySelectorAll('.inputBox').forEach(El => {
-		retriveOneDataFromDatabaseToInputEl(El)
-	})
-}
 
-function retriveOneDataFromDatabaseToInputEl(El) {
-	const storepath = El.getAttribute('data-storepath').split('ю')
-	const command = El.getAttribute('data-command')
 
-	let retrivedValue = retrive(beamObj, storepath, command)
-	if (retrivedValue != "don't have any value to be retrived" && retrivedValue != 0) {
-
-		if (typeof retrivedValue == "string" && retrivedValue.includes("bars")) {
-			retrivedValue = retrivedValue.replace("bars", "") * 1
-		}
-		El.value = retrivedValue
-	}
-}
-
-// document.querySelector("input#height").setAttribute("style", "margin-right:71px");
-// document.querySelector("input#height").style.marginLeft = "30px";
-
+// H| querySelectorAll inputBox
 document.querySelectorAll(".inputBox").forEach(El => {
 	El.addEventListener("focus", function (e) {
 		El.classList.add("modified")
@@ -146,9 +142,32 @@ function inputDataToDatabase(El) {
 	assign(beamObj, storepath, El.value * 1, command)
 }
 
+
+function retriveAllDataFromDatabaseToInputEl() {
+	document.querySelectorAll('.inputBox').forEach(El => {
+		retriveOneDataFromDatabaseToInputEl(El)
+	})
+}
+
+function retriveOneDataFromDatabaseToInputEl(El) {
+	const storepath = El.getAttribute('data-storepath').split('ю')
+	const command = El.getAttribute('data-command')
+
+	let retrivedValue = retrive(beamObj, storepath, command)
+	if (retrivedValue != "don't have any value to be retrived" && retrivedValue != 0) {
+
+		if (typeof retrivedValue == "string" && retrivedValue.includes("bars")) {
+			retrivedValue = retrivedValue.replace("bars", "") * 1
+		}
+		El.value = retrivedValue
+	}
+}
+
+
 function calculateAndUpdateResult() {
 	beamObj.dimension.area = beamObj.dimension.height * 1 * beamObj.dimension.width * 1;
 	beamObj.dimension.parameter = 2 * (beamObj.dimension.height * 1 + beamObj.dimension.width * 1);
+	beamObj.materialStrength.εy = beamObj.materialStrength.steel / (2 * 10 ** 5)
 
 	const FS = ["firstLayerList", "secondLayerList"]
 	let topFirstLayerMaxDia = 0
@@ -252,13 +271,14 @@ function calculateAndUpdateResult() {
 
 
 
-	console.log("finished calculating result")
+	// console.log("finished calculating result")
 
 	ResultPrintOutToOutputEl()
+	console.log(beamObj)
 }
 
 function calculateMoment(positiveOrNegative) {
-	let As, d, dt, As_prime, d_prime = null
+	let As, d, dt, As_prime, d_prime
 	if (positiveOrNegative == "positive") {
 		As = beamObj.bottombar.area
 		d = beamObj.bottombar.centroid
@@ -294,16 +314,31 @@ function calculateMoment(positiveOrNegative) {
 		d_prime = beamObj.dimension.height - beamObj.bottombar.centroid
 	}
 
-	let ρ, ρ_prime = null
-	ρ = As / (beamObj.dimension.width * d)
-	ρ_prime = As_prime / (beamObj.dimension.width * d)
+	let ρ, ρ_prime
+	if (d != null) {
+		ρ = As / (beamObj.dimension.width * d)
+		ρ_prime = As_prime / (beamObj.dimension.width * d)
+	} else if (d_prime != null) {
+		ρ = As / (beamObj.dimension.width * (beamObj.dimension.height - d_prime))
+		ρ_prime = As_prime / (beamObj.dimension.width * (beamObj.dimension.height - d_prime))
+	} else {
+		ρ = 0
+		ρ_prime = 0
+	}
+
 
 	const lastpartofformula = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete / beamObj.materialStrength.steel * d_prime / d * (0.003 / (0.003 - beamObj.materialStrength.steel / (2 * 10 ** 5))) + ρ_prime
-	const isTopbarYielded = ρ > lastpartofformula
+	let isTopbarYielded
+	if (beamObj.materialStrength.εy <= 0.003) {
+		isTopbarYielded = ρ > lastpartofformula
+	} else {
+		isTopbarYielded = false
+	}
 
 
 
-	let a, Mn, c, εt, ø, øMn
+
+	let a, Mn, c
 	if (isTopbarYielded || As_prime == 0) {
 		a = (ρ - ρ_prime) * beamObj.materialStrength.steel * d / (0.85 * beamObj.materialStrength.concrete)
 		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * beamObj.materialStrength.steel * (d - d_prime) / 1000 / 1000
@@ -326,9 +361,11 @@ function calculateMoment(positiveOrNegative) {
 
 	}
 
+	let εs_prime = 0.003 / c * (c - d_prime)
+	let εs = 0.003 / c * (d - c)
 
-
-	εt = 0.003 / c * (dt - c)
+	let εt = 0.003 / c * (dt - c)
+	let ø
 	if (εt > 0.005) {
 		ø = 0.9
 	}
@@ -338,9 +375,24 @@ function calculateMoment(positiveOrNegative) {
 	else if (εt < 0.002) {
 		ø = 0.65
 	}
-	øMn = ø * Mn
+	let øMn = ø * Mn
 
 
+	let Cc = 0.85 * beamObj.materialStrength.concrete * a * beamObj.dimension.width / 1000
+	let Cs_prime
+	let is_εs_prime_yielded = εs_prime >= beamObj.materialStrength.εy
+	if (is_εs_prime_yielded) {
+		Cs_prime = beamObj.materialStrength.steel * As_prime / 1000
+	} else {
+		Cs_prime = 2 * 10 ** 5 * εs_prime * As_prime / 1000
+	}
+	let Cs
+	if (εs >= beamObj.materialStrength.εy) {
+		Cs = beamObj.materialStrength.steel * As / 1000
+	} else {
+		Cs = 2 * 10 ** 5 * εs * As / 1000
+	}
+	let is_C_equal_T = Math.abs(Cc + Cs_prime - Cs) < 0.01
 
 	beamObj[positiveOrNegative].As = As
 	beamObj[positiveOrNegative].d = d
@@ -353,22 +405,29 @@ function calculateMoment(positiveOrNegative) {
 	beamObj[positiveOrNegative].a = a
 	beamObj[positiveOrNegative].c = c
 	beamObj[positiveOrNegative].εt = εt
+	beamObj[positiveOrNegative].εs_prime = εs_prime
+	beamObj[positiveOrNegative].is_εs_prime_yielded = is_εs_prime_yielded
 	beamObj[positiveOrNegative].ø = ø
 	beamObj[positiveOrNegative].Mn = Mn
 	beamObj[positiveOrNegative].øMn = øMn
+	beamObj[positiveOrNegative].Cc = Cc
+	beamObj[positiveOrNegative].Cs_prime = Cs_prime
+	beamObj[positiveOrNegative].Cs = Cs
+	beamObj[positiveOrNegative].is_C_equal_T = is_C_equal_T
 
 	let k
 	k = Math.sqrt((9 * ρ) ** 2 + 2 * ρ * 9) - 9 * ρ
-	console.log(k * d, "k ver1")
+	// console.log(k * d, "k ver1")
 	k = (Math.sqrt((9 * ρ) ** 2 + 4 * 0.63875 * 9 * ρ) - 9 * ρ) / (2 * 0.63875)
-	console.log(k * d, "k ver2")
+	// console.log(k * d, "k ver2")
 	// return [ρ, ρ_prime, lastpartofformula, isTopbarYielded, a, Mn, c, εt, ø, øMn]
 	// return [isTopbarYielded, a, c, εt, ø, øMn]
 }
 
 function ResultPrintOutToOutputEl() {
-	document.querySelectorAll(".outputBox").forEach(EL => {
-		EL.innerHTML = retrive(beamObj, EL.getAttribute("data-storepath").split('ю'))
+	document.querySelectorAll(".outputBox").forEach(El => {
+		const round = El.getAttribute("data-round") * 1
+		El.innerHTML = Math.round(retrive(beamObj, El.getAttribute("data-storepath").split('ю')) * 10 ** round) / 10 ** round
 	})
 }
 
@@ -386,7 +445,7 @@ function redrawSVGRect() {
 	const svg = document.querySelector(".section-svg")
 	const strokeWidth = 3
 	// const strokeWidth = Math.max(beamObj.dimension.height, beamObj.dimension.width) / 100
-	svg.setAttribute("viewBox", `${-strokeWidth / 2} ${-strokeWidth / 2} ${beamObj.dimension.width + strokeWidth} ${beamObj.dimension.height + strokeWidth}`);
+	svg.setAttribute("viewBox", `${-strokeWidth / 2} ${-20} ${beamObj.dimension.width + strokeWidth} ${beamObj.dimension.height + 40}`);
 
 	const parameter_rect = svg.querySelector(".parameter-rect")
 	parameter_rect.setAttribute("width", beamObj.dimension.width)
@@ -409,7 +468,7 @@ function redrawSVGRect() {
 	inner_stirrup_rect.setAttribute("rx", 8)
 }
 function redrawSVGbar() {
-	console.log("start drawing SVG")
+	// console.log("start drawing SVG")
 
 	const TB = ["topbar", "bottombar"]
 	const FS = ["firstLayerList", "secondLayerList"]
@@ -443,7 +502,7 @@ function redrawSVGbar() {
 				})
 
 				circleEl.addEventListener("mouseover", function (e) {
-					console.log("mouseover")
+					// console.log("mouseover")
 				})
 
 			})
@@ -482,7 +541,7 @@ function redrawPositiveStrainDiagram() {
 
 	const trace2 = {
 		x: [-0.002, -0.005],
-		y: [500 - 2, 500 - 2],
+		y: [],
 		type: 'scatter',
 		mode: 'lines+text',
 		line: {
@@ -490,16 +549,16 @@ function redrawPositiveStrainDiagram() {
 			width: 2
 		},
 		text: ["0.002", "0.005"],
-		textposition: 'topright',
+		textposition: 'top',
 		textfont: {
 			size: 8,
 		},
 	};
-	trace2.y = JSON.parse(`[${beamObj.dimension.height - 2},${beamObj.dimension.height - 2}]`)
+	trace2.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
 
 	const trace3 = {
 		x: [-0.005, -0.012],
-		y: [500 - 2, 500 - 2],
+		y: [],
 		type: 'scatter',
 		mode: 'lines+text',
 		line: {
@@ -512,9 +571,29 @@ function redrawPositiveStrainDiagram() {
 			size: 8,
 		},
 	};
-	trace3.y = JSON.parse(`[${beamObj.dimension.height - 2},${beamObj.dimension.height - 2}]`)
+	trace3.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
 
-	const data = [trace1, trace2, trace3];
+
+	const trace4 = {
+		x: [],
+		y: [],
+		type: 'scatter',
+		mode: 'lines+text',
+		line: {
+			color: 'rgb(255, 0,0)',
+			width: 2
+		},
+		text: ["", "0.012"],
+		textposition: 'bottom',
+		textfont: {
+			size: 8,
+		},
+	};
+	trace4.x = [0, -beamObj.materialStrength.εy]
+	trace4.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
+	trace4.text = ["", `εy=${beamObj.materialStrength.εy}`]
+
+	const data = [trace1, trace2, trace3, trace4];
 	// const data = [trace1];
 
 	const layout = {
@@ -541,7 +620,7 @@ function redrawPositiveStrainDiagram() {
 		paper_bgcolor: 'rgba(0,0,0,0)',
 		plot_bgcolor: 'rgba(0,0,0,0)'
 	};
-	layout.yaxis.range = [beamObj.dimension.height, 0]
+	layout.yaxis.range = [beamObj.dimension.height + 20, -20]
 
 
 	Plotly.newPlot('myDiv1', data, layout, {
@@ -626,7 +705,7 @@ function assign(returnObj, storepath, value, command) {
 			// })
 		}
 	}
-	console.log(beamObj)
+	// console.log(beamObj)
 
 }
 
@@ -665,6 +744,6 @@ function retrive(returnObj, storepath, command) {
 		} else if (command == "changeArrayLength") {
 			return returnObj[deepestPathName].length.toString() + "bars"
 		}
-		console.log(beamObj)
+		// console.log(beamObj)
 	}
 }
