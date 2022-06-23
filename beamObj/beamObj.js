@@ -180,7 +180,7 @@ function calculateAndUpdateResult() {
 			if (beamObj.topbar[layer].length == 1) {
 				beamObj.topbar[layer][i].x = beamObj.dimension.width / 2
 			} else if (beamObj.topbar[layer].length >= 2) {
-				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.topbar[layer][0].diameter / 2 - beamObj.topbar[layer][beamObj.topbar[layer].length-1].diameter / 2
+				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.topbar[layer][0].diameter / 2 - beamObj.topbar[layer].at(-1).diameter / 2
 				let horizontalBarSpacing = horizontalLength / (beamObj.topbar[layer].length - 1)
 
 				beamObj.topbar[layer][i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.topbar[layer][0].diameter / 2 + horizontalBarSpacing * i
@@ -223,7 +223,7 @@ function calculateAndUpdateResult() {
 			if (beamObj.bottombar[layer].length == 1) {
 				beamObj.bottombar[layer][i].x = beamObj.dimension.width / 2
 			} else if (beamObj.bottombar[layer].length >= 2) {
-				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.bottombar[layer][0].diameter / 2 - beamObj.bottombar[layer][beamObj.topbar[layer].length-1].diameter / 2
+				let horizontalLength = beamObj.dimension.width - beamObj.dimension.covering * 2 - beamObj.stirrup * 2 - beamObj.bottombar[layer][0].diameter / 2 - beamObj.bottombar[layer].at(-1).diameter / 2
 				let horizontalBarSpacing = horizontalLength / (beamObj.bottombar[layer].length - 1)
 
 				beamObj.bottombar[layer][i].x = beamObj.dimension.covering + beamObj.stirrup + beamObj.bottombar[layer][0].diameter / 2 + horizontalBarSpacing * i
