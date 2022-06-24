@@ -686,8 +686,8 @@ function assign(returnObj, storepath, value, command) {
 					returnObj[deepestPathName].push({ diameter: returnObj[deepestPathName][returnObj[deepestPathName].length - 1].diameter })
 				} else {
 					// console.log(unreplacedstorepath.join("ю"))
-					if (document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}']`)[0].value * 1 > 0) {
-						returnObj[deepestPathName].push({ diameter: document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}']`)[0].value * 1 })
+					if (document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}'][data-command='changeBarDiameter']`)[0].value * 1 > 0) {
+						returnObj[deepestPathName].push({ diameter: document.querySelectorAll(`[data-storepath= '${unreplacedstorepath.join("ю")}'][data-command='changeBarDiameter']`)[0].value * 1 })
 					} else {
 						returnObj[deepestPathName].push({ diameter: 20, x: "", y: "" })
 					}
