@@ -45,18 +45,27 @@
 	<div id="myDiv1" style="width:150px; height:250px; display: inline-block;"></div>
 	<div id="myDiv2" style="width:150px; height:250px; display: inline-block;"></div>
 
+	<label class="kN-kg-switch-container">
+		<div>kN</div>
+		<div class="kN-kg-switch" data-unitToggle="kN">
+			<div class="roundslider"></div>
+		</div>
+		<div>kg</div>
+	</label>
+
+
 	<div class="eachOutput">
 		<label>negative moment capacity:</label>
 		<div>
-			<div id="height" class="outputBox" data-storepath='negativeюøMn' data-round="2"></div>
-			<label>kNm</label>
+			<div id="height" class="outputBox" data-storepath='negativeюøMnю0' data-round="2"></div>
+			<label data-unit="2юkNmю1юkgm" data-storepath='negativeюøMnю1'>kNm</label>
 		</div>
 	</div>
 	<div class="eachOutput">
 		<label>positive moment capacity:</label>
 		<div>
-			<div id="height" class="outputBox" data-storepath='positiveюøMn' data-round="2"></div>
-			<label>kNm</label>
+			<div id="height" class="outputBox" data-storepath='positiveюøMnю0' data-round="2"></div>
+			<label data-unit="2юkNmю1юkgm" data-storepath='positiveюøMnю1'>kNm</label>
 		</div>
 	</div>
 
@@ -251,39 +260,42 @@
 					<div class="eachInput">
 						<label data-language='concrete strengthюกำลัง'>concrete strength:</label>
 						<div>
-							<input class="inputBox" type="number" data-storepath='materialStrengthюconcrete' min="0"
-								placeholder="f'c">
-							<label>MPa</label>
+							<input class="inputBox" type="number" data-storepath='materialStrengthюconcreteю0' min="0"
+								step="0.1" placeholder="f'c">
+							<label class="unit-option" data-unit="1юMPaю0юksc"
+								data-storepath='materialStrengthюconcreteю1'>MPa</label>
 						</div>
 					</div>
 					<div class="eachInput">
-						<label data-language='steel bar strengthюกำลัง'>steel bar strength:</label>
+						<label data-language='steel bar strengthюกำลังเหล็กหลัก'>steel bar strength:</label>
 						<div>
-							<input class="inputBox" type="number" data-storepath='materialStrengthюsteel' min="0" step="10"
+							<input class="inputBox" type="number" data-storepath='materialStrengthюsteelю0' min="0" step="1"
 								placeholder="fy">
-							<label>MPa</label>
+							<label class="unit-option" data-unit="0юMPaю-1юksc"
+								data-storepath='materialStrengthюsteelю1'>MPa</label>
 						</div>
 					</div>
 					<div class="eachInput">
-						<label data-language='stirrup strengthюกำลัง'>stirrup strength:</label>
+						<label data-language='stirrup strengthюกำลังเหล็กปลอก'>stirrup strength:</label>
 						<div>
-							<input class="inputBox" type="number" data-storepath='materialStrengthюstirrup' min="0" step="10"
+							<input class="inputBox" type="number" data-storepath='materialStrengthюstirrupю0' min="0" step="1"
 								placeholder="strength">
-							<label>MPa</label>
+							<label class="unit-option" data-unit="0юMPaю-1юksc"
+								data-storepath='materialStrengthюstirrupю1'>MPa</label>
 						</div>
 					</div>
 
 				</div>
 				<div class="output-grid">
 					<div class="eachOutput">
-						<label data-language='heightюความสูง'>β1:</label>
+						<label>β1:</label>
 						<div>
 							<div id="height" class="outputBox" data-storepath='materialStrengthюβ1' data-round="2"></div>
 							<label></label>
 						</div>
 					</div>
 					<div class="eachOutput">
-						<label data-language='heightюความสูง'>εy:</label>
+						<label>εy:</label>
 						<div>
 							<div id="height" class="outputBox" data-storepath='materialStrengthюεy' data-round="5"></div>
 							<label></label>
