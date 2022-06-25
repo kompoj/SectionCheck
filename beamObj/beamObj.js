@@ -15,53 +15,15 @@ const beamObj = {
 	},
 	stirrup: 9,
 	materialStrength: {
-		concrete: 28,
-		steel: 400,
-		stirrup: 240
+		concrete: [28, "MPa"],
+		steel: [400, "MPa"],
+		stirrup: [240, "MPa"]
 	},
 	positive: {
-		// As: null,
-		// d: null,
-		// dt: null,
-		// As_prime: null,
-		// d_prime: null,
-		// ρ: null,
-		// ρ_prime: null,
-		// isTopbarYielded: null,
-		// a: null,
-		// c: null,
-		// εt: null,
-		// εs_prime: null,
-		// is_εs_prime_yielded: null,
-		// ø: null,
-		// Mn: null,
-		// øMn: null,
-		// Cc: null,
-		// Cs_prime: null,
-		// Cs: null,
-		// is_C_equal_T: null,
+		øMn: [0, "kNm"],
 	},
 	negative: {
-		// As: null,
-		// d: null,
-		// dt: null,
-		// As_prime: null,
-		// d_prime: null,
-		// ρ: null,
-		// ρ_prime: null,
-		// isTopbarYielded: null,
-		// a: null,
-		// c: null,
-		// εt: null,
-		// εs_prime: null,
-		// is_εs_prime_yielded: null,
-		// ø: null,
-		// Mn: null,
-		// øMn: null,
-		// Cc: null,
-		// Cs_prime: null,
-		// Cs: null,
-		// is_C_equal_T: null,
+		øMn: [0, "kNm"],
 	}
 
 
@@ -103,6 +65,82 @@ document.querySelector('#redrawSVG').addEventListener('click', function () {
 	redrawSVG()
 })
 
+// H| querySelector('.kN-kg-switch')
+const kN_kg_switch = document.querySelector('.kN-kg-switch')
+kN_kg_switch.addEventListener('click', function () {
+	if (kN_kg_switch.getAttribute("data-unitToggle") == "kN") {
+		kN_kg_switch.setAttribute("data-unitToggle", "kg")
+	} else if (kN_kg_switch.getAttribute("data-unitToggle") == "kg") {
+		kN_kg_switch.setAttribute("data-unitToggle", "kN")
+	}
+
+
+	document.querySelectorAll("[data-unit]").forEach(El => {
+		// El = unit option element
+		let unitStorepath = El.getAttribute("data-storepath").split("ю")
+		let oldUnit = retrive(beamObj, unitStorepath)
+
+		let ValueStorepath = [...unitStorepath]
+		ValueStorepath[ValueStorepath.length - 1] = 0
+		let oldValue = retrive(beamObj, ValueStorepath)
+		// console.log(oldValue, storepath)
+
+		let unitArray = El.getAttribute("data-unit").split("ю")
+		let newUnit
+
+		if (kN_kg_switch.getAttribute("data-unitToggle") == "kN") {
+			newUnit = unitArray[1]
+			assign(beamObj, unitStorepath, newUnit)
+
+			if (El.previousElementSibling.classList.contains("inputBox")) {
+				El.previousElementSibling.setAttribute("step", 10 ** -unitArray[0])
+				newConvertedValue = Math.round(convertUnit(newUnit, oldValue, oldUnit) * 10 ** unitArray[0]) / (10 ** unitArray[0])
+				assign(beamObj, ValueStorepath, newConvertedValue)
+
+			} else if (El.previousElementSibling.classList.contains("outputBox")) {
+				El.previousElementSibling.setAttribute("data-round", unitArray[0])
+			}
+
+		} else if (kN_kg_switch.getAttribute("data-unitToggle") == "kg") {
+			newUnit = unitArray[3]
+			// console.log(newUnit, storepath)
+			assign(beamObj, unitStorepath, newUnit)
+			if (El.previousElementSibling.classList.contains("inputBox")) {
+				El.previousElementSibling.setAttribute("step", 10 ** -unitArray[2])
+				newConvertedValue = Math.round(convertUnit(newUnit, oldValue, oldUnit) * 10 ** unitArray[2]) / (10 ** unitArray[2])
+				assign(beamObj, ValueStorepath, newConvertedValue)
+
+			} else if (El.previousElementSibling.classList.contains("outputBox")) {
+				El.previousElementSibling.setAttribute("data-round", unitArray[2])
+			}
+		}
+
+
+
+	})
+
+	retriveAllDataFromDatabaseToInputEl()
+	calculateAndUpdateResult()
+})
+
+function convertUnit(newUnit, oldValue, oldUnit) {
+	if (newUnit == oldUnit) {
+		return oldValue
+	}
+
+	else if (newUnit == "ksc" && oldUnit == "MPa") {
+		return oldValue / 9.81 * 100
+	} else if (newUnit == "MPa" && oldUnit == "ksc") {
+		return oldValue * 9.81 / 100
+	}
+
+	else if (newUnit == "kgm" && oldUnit == "kNm") {
+		return oldValue * 1000 / 9.81
+	} else if (newUnit == "kNm" && oldUnit == "kgm") {
+		return oldValue * 9.81 / 1000
+	}
+}
+
 
 inititialize()
 function inititialize() {
@@ -142,32 +180,36 @@ function inputDataToDatabase(El) {
 	assign(beamObj, storepath, El.value * 1, command)
 }
 
-
+// H| function retriveAllDataFromDatabaseToInputEl
 function retriveAllDataFromDatabaseToInputEl() {
 	document.querySelectorAll('.inputBox').forEach(El => {
-		retriveOneDataFromDatabaseToInputEl(El)
+		const storepath = El.getAttribute('data-storepath').split('ю')
+		const command = El.getAttribute('data-command')
+
+		let retrivedValue = retrive(beamObj, storepath, command)
+		if (retrivedValue != "don't have any value to be retrived" && retrivedValue != 0) {
+
+			if (typeof retrivedValue == "string" && retrivedValue.includes("bars")) {
+				retrivedValue = retrivedValue.replace("bars", "") * 1
+			}
+
+			El.value = retrivedValue
+		}
+	})
+
+	document.querySelectorAll('[data-unit]').forEach(El => {
+		const storepath = El.getAttribute('data-storepath').split('ю')
+		// const command = El.getAttribute('data-command')
+		El.innerHTML = retrive(beamObj, storepath)
 	})
 }
 
-function retriveOneDataFromDatabaseToInputEl(El) {
-	const storepath = El.getAttribute('data-storepath').split('ю')
-	const command = El.getAttribute('data-command')
-
-	let retrivedValue = retrive(beamObj, storepath, command)
-	if (retrivedValue != "don't have any value to be retrived" && retrivedValue != 0) {
-
-		if (typeof retrivedValue == "string" && retrivedValue.includes("bars")) {
-			retrivedValue = retrivedValue.replace("bars", "") * 1
-		}
-		El.value = retrivedValue
-	}
-}
-
-
+// H| function calculateAndUpdateResult
 function calculateAndUpdateResult() {
 	beamObj.dimension.area = beamObj.dimension.height * 1 * beamObj.dimension.width * 1;
 	beamObj.dimension.parameter = 2 * (beamObj.dimension.height * 1 + beamObj.dimension.width * 1);
-	beamObj.materialStrength.εy = beamObj.materialStrength.steel / (2 * 10 ** 5)
+	const fy_MPa = convertUnit("MPa", beamObj.materialStrength.steel[0], beamObj.materialStrength.steel[1])
+	beamObj.materialStrength.εy = Math.round(fy_MPa / (2 * 10 ** 5) * 100000) / 100000
 
 	const FS = ["firstLayerList", "secondLayerList"]
 	let topFirstLayerMaxDia = 0
@@ -254,12 +296,12 @@ function calculateAndUpdateResult() {
 
 
 
-
-	if (beamObj.materialStrength.concrete <= 28) {
+	const fc_MPa = convertUnit("MPa", beamObj.materialStrength.concrete[0], beamObj.materialStrength.concrete[1])
+	if (fc_MPa <= 28) {
 		beamObj.materialStrength.β1 = 0.85
-	} else if (beamObj.materialStrength.concrete > 28 && beamObj.materialStrength.concrete < 56) {
-		beamObj.materialStrength.β1 = 0.85 - 0.2 * (beamObj.materialStrength.concrete - 28) / 28
-	} else if (beamObj.materialStrength.concrete >= 56) {
+	} else if (fc_MPa > 28 && fc_MPa < 56) {
+		beamObj.materialStrength.β1 = 0.85 - 0.2 * (fc_MPa - 28) / 28
+	} else if (fc_MPa >= 56) {
 		beamObj.materialStrength.β1 = 0.65
 	}
 
@@ -278,6 +320,9 @@ function calculateAndUpdateResult() {
 }
 
 function calculateMoment(positiveOrNegative) {
+	const fc_MPa = convertUnit("MPa", beamObj.materialStrength.concrete[0], beamObj.materialStrength.concrete[1])
+	const fy_MPa = convertUnit("MPa", beamObj.materialStrength.steel[0], beamObj.materialStrength.steel[1])
+
 	let As, d, dt, As_prime, d_prime
 	if (positiveOrNegative == "positive") {
 		As = beamObj.bottombar.area
@@ -327,9 +372,9 @@ function calculateMoment(positiveOrNegative) {
 	}
 
 
-	const lastpartofformula = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete / beamObj.materialStrength.steel * d_prime / d * (0.003 / (0.003 - beamObj.materialStrength.steel / (2 * 10 ** 5))) + ρ_prime
+	const lastpartofformula = 0.85 * beamObj.materialStrength.β1 * fc_MPa / fy_MPa * d_prime / d * (0.003 / (0.003 - fy_MPa / (2 * 10 ** 5))) + ρ_prime
 	let isTopbarYielded
-	if (beamObj.materialStrength.εy <= 0.003) {
+	if (beamObj.materialStrength.εy < 0.003) {
 		isTopbarYielded = ρ > lastpartofformula
 	} else {
 		isTopbarYielded = false
@@ -340,8 +385,8 @@ function calculateMoment(positiveOrNegative) {
 
 	let a, Mn, c
 	if (isTopbarYielded || As_prime == 0) {
-		a = (ρ - ρ_prime) * beamObj.materialStrength.steel * d / (0.85 * beamObj.materialStrength.concrete)
-		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * beamObj.materialStrength.steel * (d - d_prime) / 1000 / 1000
+		a = (ρ - ρ_prime) * fy_MPa * d / (0.85 * fc_MPa)
+		Mn = 0.85 * fc_MPa * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * fy_MPa * (d - d_prime) / 1000 / 1000
 		c = a / beamObj.materialStrength.β1
 
 
@@ -349,15 +394,15 @@ function calculateMoment(positiveOrNegative) {
 	} else {
 		let firstCoeff, secondCoeff, thirdCoeff
 
-		firstCoeff = 0.85 * beamObj.materialStrength.β1 * beamObj.materialStrength.concrete * beamObj.dimension.width
-		secondCoeff = As_prime * 0.003 * 2 * 10 ** 5 - As * beamObj.materialStrength.steel
+		firstCoeff = 0.85 * beamObj.materialStrength.β1 * fc_MPa * beamObj.dimension.width
+		secondCoeff = As_prime * 0.003 * 2 * 10 ** 5 - As * fy_MPa
 		thirdCoeff = -As_prime * 0.003 * 2 * 10 ** 5 * d_prime
 
 		// = IF(A20 = FALSE, (-M23 + SQRT(M23 ^ 2 - 4 * M22 * M24)) / (2 * M22), 0)
 		c = (-secondCoeff + Math.sqrt(secondCoeff ** 2 - 4 * firstCoeff * thirdCoeff)) / (2 * firstCoeff)
 		a = beamObj.materialStrength.β1 * c
 		// =0.85*f.c*a/1000*b/1000*(d-a/2)+As.*2*10^5*(0.003/c*(c-d.))*(d-d.)/1000/1000
-		Mn = 0.85 * beamObj.materialStrength.concrete * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * 2 * 10 ** 5 * (0.003 / c * (c - d_prime)) * (d - d_prime) / 1000 / 1000
+		Mn = 0.85 * fc_MPa * a / 1000 * beamObj.dimension.width / 1000 * (d - a / 2) + As_prime * 2 * 10 ** 5 * (0.003 / c * (c - d_prime)) * (d - d_prime) / 1000 / 1000
 
 	}
 
@@ -378,17 +423,17 @@ function calculateMoment(positiveOrNegative) {
 	let øMn = ø * Mn
 
 
-	let Cc = 0.85 * beamObj.materialStrength.concrete * a * beamObj.dimension.width / 1000
+	let Cc = 0.85 * fc_MPa * a * beamObj.dimension.width / 1000
 	let Cs_prime
 	let is_εs_prime_yielded = εs_prime >= beamObj.materialStrength.εy
 	if (is_εs_prime_yielded) {
-		Cs_prime = beamObj.materialStrength.steel * As_prime / 1000
+		Cs_prime = fy_MPa * As_prime / 1000
 	} else {
 		Cs_prime = 2 * 10 ** 5 * εs_prime * As_prime / 1000
 	}
 	let Cs
 	if (εs >= beamObj.materialStrength.εy) {
-		Cs = beamObj.materialStrength.steel * As / 1000
+		Cs = fy_MPa * As / 1000
 	} else {
 		Cs = 2 * 10 ** 5 * εs * As / 1000
 	}
@@ -409,7 +454,7 @@ function calculateMoment(positiveOrNegative) {
 	beamObj[positiveOrNegative].is_εs_prime_yielded = is_εs_prime_yielded
 	beamObj[positiveOrNegative].ø = ø
 	beamObj[positiveOrNegative].Mn = Mn
-	beamObj[positiveOrNegative].øMn = øMn
+	beamObj[positiveOrNegative].øMn[0] = convertUnit(beamObj[positiveOrNegative].øMn[1], øMn, "kNm")
 	beamObj[positiveOrNegative].Cc = Cc
 	beamObj[positiveOrNegative].Cs_prime = Cs_prime
 	beamObj[positiveOrNegative].Cs = Cs
@@ -434,7 +479,7 @@ function ResultPrintOutToOutputEl() {
 
 
 
-
+// H| function redrawSVG
 function redrawSVG() {
 	redrawSVGRect()
 	redrawSVGbar()
@@ -673,6 +718,7 @@ function assign(returnObj, storepath, value, command) {
 	if (!(Array.isArray(returnObj[deepestPathName]))) {
 		returnObj[deepestPathName] = value
 		// console.log(returnObj[deepestPathName])
+		// console.log(beamObj)
 	} else {
 
 		if (command == "changeBarDiameter") {

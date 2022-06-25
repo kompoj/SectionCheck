@@ -1,4 +1,32 @@
 @charset "UTF-8";
+.kN-kg-switch-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.kN-kg-switch {
+  width: 3.5rem;
+  border-radius: 100rem;
+  display: flex;
+  align-items: center;
+  background-color: #5477a0;
+}
+.kN-kg-switch .roundslider {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100rem;
+  background-color: white;
+  transition: 0.2s;
+}
+
+.kN-kg-switch[data-unitToggle=kN] .roundslider {
+  transform: translate(0.3rem, 0);
+}
+
+.kN-kg-switch[data-unitToggle=kg] .roundslider {
+  transform: translate(1.7rem, 0);
+}
+
 * {
   font-family: "Sarabun", sans-serif;
   margin: 0;
@@ -20,7 +48,7 @@ body {
 
 .inputBox {
   width: 7.5rem;
-  color: #aaa;
+  color: #888;
   /* margin-left: 1rem; */
   margin-right: 0.5rem;
   padding: 0.6rem;
@@ -40,7 +68,7 @@ body {
 .outputBox {
   display: inline-block;
   width: 8rem;
-  color: #aaa;
+  color: #888;
   border-radius: 1px;
   padding: 4px;
   font-size: 1.5rem;
@@ -75,7 +103,7 @@ label {
 }
 
 .accordion {
-  max-width: 85rem;
+  max-width: 95rem;
   margin: 3rem auto;
 }
 
@@ -96,6 +124,7 @@ label {
 
 .accordion-content-inner {
   margin-left: 1.6rem;
+  margin-top: 1rem;
 }
 
 .accordion.collapsed > .accordion-header::before {
