@@ -38,11 +38,12 @@
 
 html {
   font-size: 62.5%;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Dosis", sans-serif;
+  --font-size: 1.8rem;
 }
 
 body {
-  font-size: 1.5rem;
+  font-size: var(--font-size);
   background: url(../bgnoise.png);
 }
 
@@ -86,6 +87,8 @@ body {
 .outputBox {
   width: 8rem;
   color: #888;
+  font-family: "Sarabun", sans-serif;
+  font-size: 1.5rem;
   border-radius: 5px;
   border: none;
   box-shadow: rgba(10, 10, 11, 0.1) 0px 5px 15px 0px;
@@ -125,7 +128,7 @@ body {
 }
 
 .accordion-header {
-  font-size: 1.6rem;
+  font-size: var(--font-size);
   cursor: pointer;
   display: inline-block;
   user-select: none;
@@ -171,7 +174,7 @@ body {
 }
 .input-grid h3 {
   grid-column: 1/-1;
-  font-size: 1.5rem;
+  font-size: var(--font-size);
   font-weight: 500;
 }
 
