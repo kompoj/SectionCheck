@@ -30,6 +30,12 @@ const beamObj = {
 }
 
 
+inititialize()
+function inititialize() {
+	retriveAllDataFromDatabaseToInputEl()
+	calculateAndUpdateResult()
+	redrawSVG()
+}
 
 
 
@@ -64,6 +70,58 @@ document.querySelector('#calculateAndUpdateResult').addEventListener('click', fu
 document.querySelector('#redrawSVG').addEventListener('click', function () {
 	redrawSVG()
 })
+
+
+function convertUnit(newUnit, oldValue, oldUnit) {
+	if (newUnit == oldUnit) {
+		return oldValue
+	}
+
+	else if (newUnit == "ksc" && oldUnit == "MPa") {
+		return oldValue / 9.81 * 100
+	} else if (newUnit == "MPa" && oldUnit == "ksc") {
+		return oldValue * 9.81 / 100
+	}
+
+	else if (newUnit == "kgm" && oldUnit == "kNm") {
+		return oldValue * 1000 / 9.81
+	} else if (newUnit == "kNm" && oldUnit == "kgm") {
+		return oldValue * 9.81 / 1000
+	}
+}
+
+
+
+
+
+
+// H| querySelectorAll inputBox
+document.querySelectorAll(".inputBox").forEach(El => {
+	El.addEventListener("focus", function (e) {
+		El.classList.add("modified")
+
+		document.querySelectorAll(".outputBox").forEach(El => {
+			El.classList.add("modified")
+		})
+	})
+
+
+	El.addEventListener('wheel', () => { })
+
+	El.addEventListener("input", function (e) {
+		const storepath = El.getAttribute("data-storepath").split('ю')
+		const command = El.getAttribute("data-command")
+		assign(beamObj, storepath, El.value * 1, command)
+
+
+		retriveAllDataFromDatabaseToInputEl()
+		calculateAndUpdateResult()
+		redrawSVG()
+	})
+
+})
+
+
 
 // H| querySelector('.kN-kg-switch')
 const kN_kg_switch = document.querySelector('.kN-kg-switch')
@@ -123,62 +181,6 @@ kN_kg_switch.addEventListener('click', function () {
 	calculateAndUpdateResult()
 })
 
-function convertUnit(newUnit, oldValue, oldUnit) {
-	if (newUnit == oldUnit) {
-		return oldValue
-	}
-
-	else if (newUnit == "ksc" && oldUnit == "MPa") {
-		return oldValue / 9.81 * 100
-	} else if (newUnit == "MPa" && oldUnit == "ksc") {
-		return oldValue * 9.81 / 100
-	}
-
-	else if (newUnit == "kgm" && oldUnit == "kNm") {
-		return oldValue * 1000 / 9.81
-	} else if (newUnit == "kNm" && oldUnit == "kgm") {
-		return oldValue * 9.81 / 1000
-	}
-}
-
-
-inititialize()
-function inititialize() {
-	retriveAllDataFromDatabaseToInputEl()
-	calculateAndUpdateResult()
-	redrawSVG()
-}
-
-
-
-
-// H| querySelectorAll inputBox
-document.querySelectorAll(".inputBox").forEach(El => {
-	El.addEventListener("focus", function (e) {
-		El.classList.add("modified")
-
-		document.querySelectorAll(".outputBox").forEach(El => {
-			El.classList.add("modified")
-		})
-	})
-
-
-
-	El.addEventListener("input", function (e) {
-		inputDataToDatabase(El)
-		retriveAllDataFromDatabaseToInputEl()
-		calculateAndUpdateResult()
-		redrawSVG()
-	})
-
-	El.addEventListener('wheel', () => { })
-})
-
-function inputDataToDatabase(El) {
-	const storepath = El.getAttribute("data-storepath").split('ю')
-	const command = El.getAttribute("data-command")
-	assign(beamObj, storepath, El.value * 1, command)
-}
 
 // H| function retriveAllDataFromDatabaseToInputEl
 function retriveAllDataFromDatabaseToInputEl() {

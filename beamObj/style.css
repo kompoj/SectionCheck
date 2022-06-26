@@ -1,11 +1,14 @@
 @charset "UTF-8";
 .kN-kg-switch-container {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .kN-kg-switch {
-  width: 3.5rem;
+  width: 3.7rem;
+  height: 1.9rem;
   border-radius: 100rem;
   display: flex;
   align-items: center;
@@ -14,7 +17,7 @@
 .kN-kg-switch .roundslider {
   width: 1.5rem;
   height: 1.5rem;
-  border-radius: 100rem;
+  border-radius: 50%;
   background-color: white;
   transition: 0.2s;
 }
@@ -24,11 +27,10 @@
 }
 
 .kN-kg-switch[data-unitToggle=kg] .roundslider {
-  transform: translate(1.7rem, 0);
+  transform: translate(1.9rem, 0);
 }
 
 * {
-  font-family: "Sarabun", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -36,9 +38,11 @@
 
 html {
   font-size: 62.5%;
+  font-family: "Sarabun", sans-serif;
 }
 
 body {
+  font-size: 1.5rem;
   background: url(../bgnoise.png);
 }
 
@@ -49,30 +53,47 @@ body {
 .inputBox {
   width: 7.5rem;
   color: #888;
+  font-family: "Sarabun", sans-serif;
+  font-size: 1.5rem;
   /* margin-left: 1rem; */
   margin-right: 0.5rem;
   padding: 0.6rem;
-  border: 1px solid #555;
+  border: none;
+  box-shadow: rgba(84, 119, 160, 0.4509803922) 0px 1px 5px 0px;
   border-radius: 5px;
-  font-size: 1.5rem;
   background-color: #e1f1ff;
+  transition: background-color 0.2s;
+  outline: rgba(0, 0, 0, 0);
 }
-.inputBox:focus, .inputBox:active {
+.inputBox:hover:not(:focus-visible) {
+  outline: 1px solid rgba(84, 119, 160, 0.4509803922);
+}
+.inputBox:focus, .inputBox:active, .inputBox:focus-visible {
   background-color: #acd3ff;
+  outline: 1px solid #5477a0;
   /* border: 12px solid #555; */
+}
+.inputBox::-webkit-outer-spin-button, .inputBox::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
 }
 .inputBox.modified {
   color: black;
 }
 
 .outputBox {
-  display: inline-block;
   width: 8rem;
   color: #888;
-  border-radius: 1px;
-  padding: 4px;
-  font-size: 1.5rem;
-  background-color: #fffec5;
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(10, 10, 11, 0.1) 0px 5px 15px 0px;
+  padding: 0.6rem;
+  margin-right: 0.5rem;
+  height: 3.4rem;
+  background-color: #fdfdd9;
+  display: inline-block;
 }
 .outputBox.modified {
   color: black;
@@ -96,10 +117,6 @@ body {
   	justify-content: flex-start;
   	align-items: center;
   	gap: 1rem */
-}
-
-label {
-  font-size: 1.5rem;
 }
 
 .accordion {
