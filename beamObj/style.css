@@ -38,8 +38,9 @@
 
 html {
   font-size: 62.5%;
-  font-family: "Dosis", sans-serif;
-  --font-size: 1.8rem;
+  font-family: "open sans", "sarabun", sans-serif;
+  font-weight: 400;
+  --font-size: 1.5rem;
 }
 
 body {
@@ -51,16 +52,19 @@ body {
   fill: #5477a0;
 }
 
+input {
+  font-family: "open sans", "sarabun", sans-serif;
+  font-weight: 400;
+  font-size: var(--font-size);
+}
+
 .inputBox {
   width: 7.5rem;
   color: #888;
-  font-family: "Sarabun", sans-serif;
-  font-size: 1.5rem;
-  /* margin-left: 1rem; */
   margin-right: 0.5rem;
   padding: 0.6rem;
   border: none;
-  box-shadow: rgba(84, 119, 160, 0.4509803922) 0px 1px 5px 0px;
+  box-shadow: rgba(84, 119, 160, 0.4509803922) 0px 0px 5px 0px;
   border-radius: 5px;
   background-color: #e1f1ff;
   transition: background-color 0.2s;
@@ -87,11 +91,9 @@ body {
 .outputBox {
   width: 8rem;
   color: #888;
-  font-family: "Sarabun", sans-serif;
-  font-size: 1.5rem;
   border-radius: 5px;
   border: none;
-  box-shadow: rgba(10, 10, 11, 0.1) 0px 5px 15px 0px;
+  box-shadow: rgba(10, 10, 11, 0.1) 0px 0px 10px 2px;
   padding: 0.6rem;
   margin-right: 0.5rem;
   height: 3.4rem;
@@ -106,20 +108,12 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  /* display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem */
 }
 
 .eachOutput {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
-  /* display: flex;
-  	justify-content: flex-start;
-  	align-items: center;
-  	gap: 1rem */
 }
 
 .accordion {
@@ -148,8 +142,6 @@ body {
 }
 
 .accordion.collapsed > .accordion-header::before {
-  /* content: "▶" */
-  /* display: inline-block; */
   transform: rotate(-90deg);
 }
 .accordion.collapsed > .accordion-content {
