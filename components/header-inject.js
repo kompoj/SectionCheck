@@ -1,5 +1,5 @@
 ﻿// injection
 document.querySelector("#header-inject").innerHTML = `<nav>
-	<div id="sectioncheck-logo">SectionCheck</div>
+	<a id="sectioncheck-logo" href="/">SectionCheck</a>
 	<a href="/about.html">about</a>
 </nav>`

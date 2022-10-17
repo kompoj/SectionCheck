@@ -1,181 +1,198 @@
 @charset "UTF-8";
+
 .kN-kg-switch-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
 }
 
 .kN-kg-switch {
-  width: 3.7rem;
-  height: 1.9rem;
-  border-radius: 100rem;
-  display: flex;
-  align-items: center;
-  background-color: #5477a0;
+	width: 3.7rem;
+	height: 1.9rem;
+	border-radius: 100rem;
+	display: flex;
+	align-items: center;
+	background-color: #5477a0;
 }
+
 .kN-kg-switch .roundslider {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background-color: white;
-  transition: 0.2s;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	background-color: white;
+	transition: 0.2s;
 }
 
 .kN-kg-switch[data-unitToggle=kN] .roundslider {
-  transform: translate(0.3rem, 0);
+	transform: translate(0.3rem, 0);
 }
 
 .kN-kg-switch[data-unitToggle=kg] .roundslider {
-  transform: translate(1.9rem, 0);
+	transform: translate(1.9rem, 0);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
-  font-family: "open sans", "sarabun", sans-serif;
-  font-weight: 400;
-  --font-size: 1.5rem;
+	font-size: 62.5%;
+	font-family: "open sans", "sarabun", sans-serif;
+	font-weight: 400;
+	--font-size: 1.5rem;
 }
 
 body {
-  font-size: var(--font-size);
-  background: url(../bgnoise.png);
+	min-height: 100vh;
+	font-size: var(--font-size);
+	background: url("/global assets/bgnoise.png");
 }
 
-.section-svg circle:hover {
-  fill: #5477a0;
-}
+
 
 input {
-  font-family: "open sans", "sarabun", sans-serif;
-  font-weight: 400;
-  font-size: var(--font-size);
+	font-family: "open sans", "sarabun", sans-serif;
+	font-weight: 400;
+	font-size: var(--font-size);
 }
 
 .inputBox {
-  width: 7.5rem;
-  color: #888;
-  margin-right: 0.5rem;
-  padding: 0.6rem;
-  border: none;
-  box-shadow: rgba(84, 119, 160, 0.4509803922) 0px 0px 5px 0px;
-  border-radius: 5px;
-  background-color: #e1f1ff;
-  transition: background-color 0.2s;
-  outline: rgba(0, 0, 0, 0);
+	width: 7.5rem;
+	color: #888;
+	margin-right: 0.5rem;
+	padding: 0.6rem;
+	border: none;
+	box-shadow: rgba(84, 119, 160, 0.4509803922) 0px 0px 5px 0px;
+	border-radius: 5px;
+	background-color: #e1f1ff;
+	transition: background-color 0.2s;
+	outline: rgba(0, 0, 0, 0);
 }
+
 .inputBox:hover:not(:focus-visible) {
-  outline: 1px solid rgba(84, 119, 160, 0.4509803922);
+	outline: 1px solid rgba(84, 119, 160, 0.4509803922);
 }
-.inputBox:focus, .inputBox:active, .inputBox:focus-visible {
-  background-color: #acd3ff;
-  outline: 1px solid #5477a0;
-  /* border: 12px solid #555; */
+
+.inputBox:focus,
+.inputBox:active,
+.inputBox:focus-visible {
+	background-color: #acd3ff;
+	outline: 1px solid #5477a0;
+	/* border: 12px solid #555; */
 }
-.inputBox::-webkit-outer-spin-button, .inputBox::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0;
-  /* <-- Apparently some margin are still there even though it's hidden */
+
+.inputBox::-webkit-outer-spin-button,
+.inputBox::-webkit-inner-spin-button {
+	/* display: none; <- Crashes Chrome on hover */
+	-webkit-appearance: none;
+	margin: 0;
+	/* <-- Apparently some margin are still there even though it's hidden */
 }
+
 .inputBox.modified {
-  color: black;
+	color: black;
 }
 
 .outputBox {
-  width: 8rem;
-  color: #888;
-  border-radius: 5px;
-  border: none;
-  box-shadow: rgba(10, 10, 11, 0.1) 0px 0px 10px 2px;
-  padding: 0.6rem;
-  margin-right: 0.5rem;
-  height: 3.4rem;
-  background-color: #fdfdd9;
-  display: inline-block;
+	width: 8rem;
+	color: #888;
+	border-radius: 5px;
+	border: none;
+	box-shadow: rgba(10, 10, 11, 0.1) 0px 0px 10px 2px;
+	padding: 0.6rem;
+	margin-right: 0.5rem;
+	height: 3.4rem;
+	background-color: #fdfdd9;
+	display: inline-block;
 }
+
 .outputBox.modified {
-  color: black;
+	color: black;
 }
 
 .eachInput {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
 }
 
 .eachOutput {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	align-items: center;
 }
 
 .accordion {
-  max-width: 95rem;
-  margin: 3rem auto;
+	max-width: 95rem;
+	margin: 3rem auto;
 }
 
 .accordion-header {
-  font-size: var(--font-size);
-  cursor: pointer;
-  display: inline-block;
-  user-select: none;
+	font-size: var(--font-size);
+	cursor: pointer;
+	display: inline-block;
+	user-select: none;
 }
+
 .accordion-header:hover {
-  color: #5477a0;
+	color: #5477a0;
 }
+
 .accordion-header::before {
-  content: "▼";
-  display: inline-block;
-  transition: transform 0.2s;
+	content: "▼";
+	display: inline-block;
+	transition: transform 0.2s;
 }
 
 .accordion-content-inner {
-  margin-left: 1.6rem;
-  margin-top: 1rem;
+	margin-left: 1.6rem;
+	margin-top: 1rem;
 }
 
-.accordion.collapsed > .accordion-header::before {
-  transform: rotate(-90deg);
+.accordion.collapsed>.accordion-header::before {
+	transform: rotate(-90deg);
 }
-.accordion.collapsed > .accordion-content {
-  max-height: 0;
-  overflow: hidden;
+
+.accordion.collapsed>.accordion-content {
+	max-height: 0;
+	overflow: hidden;
 }
 
 .input-output-grid {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  align-items: start;
-  column-gap: 10%;
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	align-items: start;
+	column-gap: 10%;
 }
 
 .input-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 15%;
-  row-gap: 1rem;
-  justify-content: start;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 15%;
+	row-gap: 1rem;
+	justify-content: start;
+	align-items: center;
 }
+
 .input-grid h3 {
-  grid-column: 1/-1;
-  font-size: var(--font-size);
-  font-weight: 500;
+	grid-column: 1/-1;
+	font-size: var(--font-size);
+	font-weight: 500;
 }
 
 .output-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  column-gap: 15%;
-  row-gap: 1rem;
-  align-items: start;
+	display: grid;
+	grid-template-columns: 1fr;
+	column-gap: 15%;
+	row-gap: 1rem;
+	align-items: start;
+}
+
+.section-svg circle:hover {
+	fill: #5477a0;
 }
 
 /*# sourceMappingURL=style.css.map */
