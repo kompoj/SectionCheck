@@ -1,1 +1,11 @@
-﻿
+﻿nav {
+	display: flex;
+	justify-content: space-between;
+}
+
+#sectioncheck-logo {
+
+	font-size: 2.5rem;
+	font-family: caveat;
+	user-select: none;
+}
