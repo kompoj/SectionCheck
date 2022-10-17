@@ -8,13 +8,7 @@
 	<title>SectionCheck</title>
 
 
-	<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet"> -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
@@ -35,17 +29,18 @@ font-family: 'Sarabun', sans-serif; -->
 
 
 <body>
-	<div id="inject-header" ;></div>
-	<script src="./component/inject-header.js"></script>
+	<!-- header-inject -->
+	<div id="header-inject" ;></div>
+	<script src="./component/header-inject.js"></script>
 	<link rel="stylesheet" href="./component/header.css">
 
 	<div class="not-nav-bar" style="display:grid; grid-template-columns: 200px 1fr;">
-		<!-- <div class="side-bar"> -->
-		<div id="inject-side-bar"></div>
-		<script src=" ./component/inject-side-bar.js">
-		</script>
+
+		<!-- side-bar-inject -->
+		<div id="sidebar-inject"></div>
+		<script src=" ./component/sidebar-inject.js"></script>
 		<link rel="stylesheet" href="./component/sidebar.css">
-		<!-- </div> -->
+
 		<div class="main-content-area">
 			<button id="change-language">change language</button>
 			<button id="calculateAndUpdateResult">calculateAndUpdateResult</button>

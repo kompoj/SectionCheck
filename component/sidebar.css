@@ -1,8 +1,8 @@
-﻿#inject-side-bar {
+﻿#sidebar-inject {
 	background-color: rgb(255, 255, 243);
 }
 
-#inject-side-bar a {
+#sidebar-inject a {
 	text-decoration: none;
 	color: #999;
 	display: block;
