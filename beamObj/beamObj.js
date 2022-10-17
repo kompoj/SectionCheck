@@ -38,6 +38,12 @@ function inititialize() {
 }
 
 
+// injection
+document.querySelector("#header").innerHTML = '<nav style="display: flex; justify - content: space - between; ">< div style = "font-size:2.5rem; font-family: caveat; user-select: none;" > SectionCheck</ ><a>about</a></nav >'
+
+
+
+
 
 document.querySelectorAll(".accordion").forEach(El => {
 	El.querySelector(".accordion-header").addEventListener("click", () => {
