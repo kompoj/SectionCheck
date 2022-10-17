@@ -138,18 +138,22 @@ kN_kg_switch.addEventListener('click', function () {
 
 	document.querySelectorAll("[data-unit]").forEach(El => {
 		// El = unit option element
+
+		//get current(old) unit
 		let unitStorepath = El.getAttribute("data-storepath").split("ю")
 		let oldUnit = retrive(beamObj, unitStorepath)
 
+		//get current(old) value
 		let ValueStorepath = [...unitStorepath]
-		ValueStorepath[ValueStorepath.length - 1] = 0
+		ValueStorepath[ValueStorepath.length - 1] = 0 //unit storepath is stored at materialstrengthюconcreteю1, meanwhile value is stored at materialstrengthюconcreteю0
 		let oldValue = retrive(beamObj, ValueStorepath)
-		// console.log(oldValue, storepath)
+
 
 		let unitArray = El.getAttribute("data-unit").split("ю")
 		let newUnit
 
 		if (kN_kg_switch.getAttribute("data-unitToggle") == "kN") {
+			//get and set target(new) unit
 			newUnit = unitArray[1]
 			assign(beamObj, unitStorepath, newUnit)
 
