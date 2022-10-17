@@ -1,4 +1,8 @@
-﻿a {
+﻿#inject-side-bar {
+	background-color: rgb(255, 255, 243);
+}
+
+#inject-side-bar a {
 	text-decoration: none;
 	color: #999;
 	display: block;
