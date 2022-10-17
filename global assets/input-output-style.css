@@ -51,7 +51,10 @@ body {
 	background: url("/global assets/bgnoise.png");
 }
 
-
+.not-nav-bar {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+}
 
 input {
 	font-family: "open sans", "sarabun", sans-serif;
