@@ -11,6 +11,18 @@ nav {
 	justify-content: space-between;
 }
 
+.hamburger {
+	display: none;
+	cursor: pointer;
+	width: 2.5rem;
+}
+
+@media (max-width:768px) {
+	.hamburger {
+		display: block
+	}
+}
+
 #sectioncheck-logo {
 	color: black;
 	text-decoration: none;
