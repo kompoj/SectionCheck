@@ -1,9 +1,22 @@
 ﻿#sidebar-inject {
 	background-color: rgb(255, 255, 243);
+	height: calc(100vh - 4rem);
+	position: sticky;
+	top: 4rem;
+	/* top must be 4rem equal to height of header nav bar not 0 rem. it yield different thing when you scrolled*/
 }
 
 #sidebar-inject a {
 	text-decoration: none;
 	color: #999;
 	display: block;
+}
+
+@media (max-width: 768px) {
+	#sidebar-inject {
+		position: absolute;
+		left: 0px;
+		width: 0px;
+		overflow: hidden;
+	}
 }

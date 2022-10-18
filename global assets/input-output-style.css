@@ -56,6 +56,12 @@ body {
 	grid-template-columns: 200px 1fr;
 }
 
+@media (max-width: 768px) {
+	.not-nav-bar {
+		grid-template-columns: 1fr;
+	}
+}
+
 input {
 	font-family: "open sans", "sarabun", sans-serif;
 	font-weight: 400;
