@@ -1,5 +1,6 @@
 ﻿#sidebar-inject {
-	background-color: rgb(255, 255, 243);
+	/* background-color: rgb(255, 255, 243); */
+	background: url("/global assets/bgnoise-lightblueslate.png");
 	height: calc(100vh - 4rem);
 	position: sticky;
 	top: 4rem;

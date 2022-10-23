@@ -1,5 +1,6 @@
 ﻿#header-inject {
-	background-color: rgb(239, 251, 255);
+	/* background-color: rgb(239, 251, 255); */
+	background: url("/global assets/bgnoise-blueslate.png");
 	height: 4rem;
 	position: sticky;
 	top: 0;
@@ -24,14 +25,16 @@ nav {
 }
 
 #sectioncheck-logo {
-	color: black;
+	color: rgb(255, 255, 255);
 	text-decoration: none;
 	font-size: 3rem;
 	font-family: caveat;
 	user-select: none;
-	transition: color 0.1s;
+	transition: color 0.2s;
 }
 
 #sectioncheck-logo:hover {
-	color: #5477a0
+	/* color: #5477a0 */
+	/* color: rgb(183, 255, 100); */
+	color: rgb(198, 255, 92)
 }
