@@ -669,8 +669,8 @@ function redrawPositiveStrainDiagram() {
 		},
 	};
 	trace6.x = [0, -beamObj.materialStrength.εy]
-	trace5.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
-	trace5.text = ["", `εy=${beamObj.materialStrength.εy}`]
+	trace6.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
+	trace6.text = ["", `εy=${beamObj.materialStrength.εy}`]
 
 	const data = [trace1, trace2, trace3, trace4, trace5, trace6];
 	// const data = [trace1];
