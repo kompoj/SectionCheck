@@ -586,7 +586,7 @@ function redrawPositiveStrainDiagram() {
 	if (beamObj.positive.εt != NaN && beamObj.positive.c != NaN && beamObj.positive.dt != NaN && beamObj.positive.dt != 0) {
 		trace1.x = [0, 0.003, 0, -beamObj.positive.εt, 0, 0]
 		trace1.y = [0, 0, beamObj.positive.c, beamObj.positive.dt, beamObj.positive.dt, 0]
-		trace1.text = ["ε=0.003", "", `c=${beamObj.positive.c}mm`, `ε=${Math.round(beamObj.positive.εt * 10000) / 10000}`, "", ""]
+		trace1.text = ["", "", "", `ε=${Math.round(beamObj.positive.εt * 10000) / 10000}`, "", ""]
 	} else {
 		trace1.x = []
 		trace1.y = []
@@ -594,6 +594,31 @@ function redrawPositiveStrainDiagram() {
 	}
 
 	const trace2 = {
+		x: [0],
+		y: [0],
+		type: 'scatter',
+		mode: 'text',
+		text: ["ε=0.003 "],
+		textposition: 'bottomleft',
+		textfont: {
+			size: 10,
+		},
+	};
+
+	const trace3 = {
+		x: [0],
+		y: [beamObj.positive.c],
+		type: 'scatter',
+		mode: 'text',
+		text: [`c=${Math.round(beamObj.positive.c * 100) / 100}mm `],
+		textposition: 'left',
+		textfont: {
+			size: 10,
+		},
+	};
+
+
+	const trace4 = {
 		x: [-0.002, -0.005],
 		y: [],
 		type: 'scatter',
@@ -608,9 +633,9 @@ function redrawPositiveStrainDiagram() {
 			size: 8,
 		},
 	};
-	trace2.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
+	trace4.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
 
-	const trace3 = {
+	const trace5 = {
 		x: [-0.005, -0.012],
 		y: [],
 		type: 'scatter',
@@ -625,10 +650,10 @@ function redrawPositiveStrainDiagram() {
 			size: 8,
 		},
 	};
-	trace3.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
+	trace5.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
 
 
-	const trace4 = {
+	const trace6 = {
 		x: [],
 		y: [],
 		type: 'scatter',
@@ -643,11 +668,11 @@ function redrawPositiveStrainDiagram() {
 			size: 8,
 		},
 	};
-	trace4.x = [0, -beamObj.materialStrength.εy]
-	trace4.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
-	trace4.text = ["", `εy=${beamObj.materialStrength.εy}`]
+	trace6.x = [0, -beamObj.materialStrength.εy]
+	trace5.y = JSON.parse(`[${beamObj.dimension.height},${beamObj.dimension.height}]`)
+	trace5.text = ["", `εy=${beamObj.materialStrength.εy}`]
 
-	const data = [trace1, trace2, trace3, trace4];
+	const data = [trace1, trace2, trace3, trace4, trace5, trace6];
 	// const data = [trace1];
 
 	const layout = {
